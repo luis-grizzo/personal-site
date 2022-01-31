@@ -39,8 +39,14 @@ export const Wrapper = styled.div`
         }
       }
 
+      .wncl__divider {
+        width: .2rem;
+        height: 3rem;
+        background-color: ${theme.colors.black};
+      }
+
       .wncl__menu-button {
-        display: none; //flex;
+        display: flex;
         align-items: center;
         justify-content: center;
 
@@ -48,18 +54,10 @@ export const Wrapper = styled.div`
         border: none;
         color: ${theme.colors.black};
         cursor: pointer;
+        padding: 0;
 
         will-change: color;
         transition: ${theme.transitions.default};
-
-        &:before {
-          content: '';
-
-          width: .2rem;
-          height: 3rem;
-          background-color: ${theme.colors.black};
-          margin-right: 2rem;
-        }
 
         &:hover {
           color: ${theme.colors.blackHover};

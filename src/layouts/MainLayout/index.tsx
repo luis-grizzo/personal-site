@@ -32,8 +32,9 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
           <a href="https://www.instagram.com/luis_ozzirg/" target='_blank' className="wncl__link">
             <FaInstagram size={30}/>
           </a>
+          <span className="wncl__divider" />
           <button type='button' className='wncl__menu-button'>
-            <MdMenu size={30} />
+            <MdMenu size={30} className='wnclmb__icon' />
           </button>
         </div>
       </nav>
