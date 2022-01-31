@@ -1,14 +1,13 @@
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 import Routes from './routes'
+import GlobalStyle from './styles/global'
 
 ReactDOM.render(
-  <StrictMode>
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
-  </StrictMode>,
+  <React.StrictMode>
+    <GlobalStyle/>
+    <Routes/>
+  </React.StrictMode>,
   document.getElementById('root')
-);
+)

@@ -1,15 +1,25 @@
-import { Switch, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Home from './pages/Home'
+import Loading from './components/Loading'
 
-const Routes = (): React.ReactElement => {
+const MainLayout = lazy(async () => await import('./layouts/MainLayout'))
+const Home = lazy(async () => await import('./pages/Home'))
+const Contact = lazy(async () => await import('./pages/Contact'))
+
+const Router = (): React.ReactElement => {
   return (
-    <Switch>
-      <Route path='/' exact>
-        <Home />
-      </Route>
-    </Switch>
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <MainLayout>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='/contact' element={<Contact />} />
+          </Routes>
+        </MainLayout>
+      </Suspense>
+    </BrowserRouter>
   )
 }
 
-export default Routes
+export default Router
