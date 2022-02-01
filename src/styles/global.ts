@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
     text-decoration: none;
+    outline: none;
   }
 
   /* HTML5 display-role reset for older browsers */
@@ -61,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
     border-spacing: 0;
   }
 
-  /*Project rules*/
+  /*PROJECT RULES*/
 
   * {
     font-family: 'Poppins', sans-serif;
@@ -71,10 +72,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
 
-  [class*='container'] {
-    width: 90vw;
-    max-width: 1280px;
-    margin: 0 auto;
+  body,
+  button,
+  input {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
   }
 `
 export default GlobalStyle
