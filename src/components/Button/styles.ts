@@ -1,28 +1,49 @@
-import styled from 'styled-components'
+import styled, { css, DefaultTheme } from 'styled-components'
 
-import { theme } from '../../styles/theme'
+import { ButtonProps } from '.'
 
-export const Wrapper = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export type StyledButtonProps = Pick<ButtonProps, 'variant'>
 
-  color: ${theme.colors.white};
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+const modifiers = {
+  primary: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.black};
+    color: ${theme.colors.white};
 
-  background-color: ${theme.colors.black};
-  border: none;
-  border-radius: 10px;
-  padding: 1.2rem 2rem;
-  cursor: pointer;
+    &:hover {
+      background-color: ${theme.colors.blackHover};
+    }
+  `,
+  secondary: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.black};
+    border-color: ${theme.colors.black};
 
-  will-change: background-color;
-  transition: ${theme.transitions.default};
+    &:hover {
+      color: ${theme.colors.blackHover};
+      border-color: ${theme.colors.blackHover};
+    }
+  `
+}
 
-  &:hover {
-    background-color: ${theme.colors.blackHover};
-  }
+export const Wrapper = styled.button<StyledButtonProps>`
+  ${({ theme, variant }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+
+    will-change: background-color;
+    transition: ${theme.transitions.default};
+
+    ${variant && modifiers[variant](theme)}
+  `}
 `

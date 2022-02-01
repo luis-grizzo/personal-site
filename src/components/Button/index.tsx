@@ -1,10 +1,14 @@
 import * as S from './styles'
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
+export type ButtonVariants = 'primary' | 'secondary'
 
-const Button = ({ children, ...props }: ButtonProps): React.ReactElement => {
+export type ButtonProps = {
+  variant?: ButtonVariants
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
+
+const Button = ({ variant = 'primary', children, ...props }: ButtonProps): React.ReactElement => {
   return (
-    <S.Wrapper type='button' {...props}>
+    <S.Wrapper type='button' variant={variant} {...props}>
       {children}
     </S.Wrapper>
   )
