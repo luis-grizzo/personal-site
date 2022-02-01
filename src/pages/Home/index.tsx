@@ -15,11 +15,16 @@ const Home = (): React.ReactElement => {
         <strong className='wt__highlight'>UI-Designer</strong>
       </h1>
       <p className="w__description">
-        Me chamo <a href='https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/' target='_blank' className='wd__link'>Luís Grizzo</a> e este é meu site, aqui você encontra todos meus links para contato, obrigado pela visita!
+        Me chamo <a href='https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/' target='_blank' className='wd__link'>Luís Grizzo</a> e este é meu site! Aqui você pode conhecer um pouco sobre mim e encontrar todos os meus links para contato, obrigado pela visita!
       </p>
-      <Button onClick={() => navigate('/contact')}>
-        Entre em contato
-      </Button>
+      <div className="w__button-wrapper">
+        <Button variant='secondary' onClick={() => navigate('/about')}>
+          Sobre mim
+        </Button>
+        <Button onClick={() => navigate('/contact')}>
+          Entre em contato
+        </Button>
+      </div>
     </S.Wrapper>
   )
 }
