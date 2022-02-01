@@ -5,26 +5,41 @@ import { theme } from '../../styles/theme'
 import portrait from '../../assets/portrait.png'
 
 export const Wrapper = styled.div`
-  display: grid;
-  grid-auto-columns: auto;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 
   height: 100vh;
-  width: 100vw;
+  width: 90vw;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 0;
+  overflow: hidden;
 
-  .w__navbar-container {
+  @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+    gap: 3rem;
+
+    height: auto;
+    padding: 3rem 0;
+    overflow: auto;
+  }
+
+  .w__navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 4rem;
 
-    padding: 3rem 0;
+    width: 100%;
 
-    .wnc__links {
+    .wn__link-wrapper {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 2rem;
 
-      .wncl__link {
+      width: 100%;
+
+      .wnlw__link {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -39,13 +54,13 @@ export const Wrapper = styled.div`
         }
       }
 
-      .wncl__divider {
+      .wnl__divider {
         width: .2rem;
         height: 3rem;
         background-color: ${theme.colors.black};
       }
 
-      .wncl__menu-button {
+      .wnl__menu-button {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -66,41 +81,96 @@ export const Wrapper = styled.div`
     }
   }
 
-  .w__main-container {
-    display: grid;
-    grid-template-columns: calc(60% - 3rem) 40%;
-    grid-auto-rows: auto;
+  .w__main {
+    display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: 5rem;
 
     height: 100%;
-    padding-bottom: 5rem;
+    width: 100%;
+    overflow: hidden;
 
-    .wmc__page {
-      font-size: 2rem;
-      color: ${theme.colors.black};
+    @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+
+      overflow: visible;
     }
 
-    .wmc__aside {
+    .wm__page {
+      display: flex;
+      align-items: center;
+
+      width: 60%;
+      height: 100%;
+      overflow: auto;
+
+      [class*='description'] {
+        line-height: normal;
+      }
+
+      @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+        height: auto;
+        width: 100%;
+        overflow: visible;
+
+        [class*='title'] {
+          font-size: 5.8rem;
+        }
+      }
+
+      ::-webkit-scrollbar {
+        opacity: 0;
+        width: 8px;
+      }
+
+
+      &:hover {
+        ::-webkit-scrollbar {
+          opacity: 1;
+        }
+
+        ::-webkit-scrollbar-track {
+          opacity: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background-color: ${theme.colors.text};
+          border-radius: 1rem;
+
+          &:hover {
+            background-color: ${theme.colors.textHover};
+          }
+        }
+      }
+
+    }
+
+    .wm__aside {
       display: flex;
       align-items: flex-end;
       gap: 1rem;
 
       height: 100%;
       max-height: 60rem;
+      width: 40%;
 
-      .wmca__techs-wrapper {
+      @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+        width: 100%;
+      }
+
+      .wma__techs-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
 
-        .wmcatw__tech {
+        .wmatw__tech {
           width: 5rem;
         }
       }
 
-      .wmca__portrait {
+      .wma__portrait {
         display: flex;
         align-items: flex-end;
 
@@ -115,6 +185,10 @@ export const Wrapper = styled.div`
         border-radius: 50px;
         border-bottom-left-radius: 10px;
         overflow: hidden;
+
+        @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+          height: 45rem;
+        }
 
         &::before {
           content: '';

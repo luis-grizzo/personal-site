@@ -1,8 +1,12 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import IndianaDrag from 'react-indiana-drag-scroll'
 import { FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
 import { MdMenu } from 'react-icons/md'
 
 import Logo from '../../components/Logo'
+import Menu from '../../components/Menu'
+
 import * as S from './styles'
 
 import html5 from '../../assets/html5.png'
@@ -16,43 +20,50 @@ export interface MainLayoutProps {
 }
 
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false)
+
   return (
     <S.Wrapper>
-      <nav className='w__navbar-container'>
-        <Link to="/">
+      <nav className='w__navbar'>
+        <Link to="/" >
           <Logo />
         </Link>
-        <div className="wnc__links">
-          <a href="https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/" target='_blank' aria-disabled className="wncl__link">
+        <div className="wn__link-wrapper">
+          <a href="https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/" target='_blank' className="wnlw__link">
             <FaLinkedinIn size={30}/>
           </a>
-          <a href="https://github.com/luis-grizzo" target='_blank' className="wncl__link">
+          <a href="https://github.com/luis-grizzo" target='_blank' className="wnlw__link">
             <FaGithub size={30}/>
           </a>
-          <a href="https://www.instagram.com/luis_ozzirg/" target='_blank' className="wncl__link">
+          <a href="https://www.instagram.com/luis_ozzirg/" target='_blank' className="wnlw__link">
             <FaInstagram size={30}/>
           </a>
-          <span className="wncl__divider" />
-          <button type='button' className='wncl__menu-button'>
+          <span className="wnl__divider" />
+          <button type='button' onClick={() => setMenuIsOpen(prevState => !prevState)} className='wnl__menu-button'>
             <MdMenu size={30} className='wnclmb__icon' />
           </button>
         </div>
       </nav>
-      <main className='w__main-container'>
-        <article className="wmc__page">
+      <main className='w__main'>
+        <IndianaDrag
+          horizontal={false}
+          hideScrollbars={false}
+          className='wm__page'
+        >
           {children}
-        </article>
-        <aside className="wmc__aside">
-          <div className="wmca__techs-wrapper">
-            <img src={html5} alt="html 5" className='wmcatw__tech' />
-            <img src={css3} alt="css 3" className='wmcatw__tech' />
-            <img src={js} alt="javascript" className='wmcatw__tech' />
-            <img src={ts} alt="typescript" className='wmcatw__tech' />
-            <img src={react} alt="react" className='wmcatw__tech' />
+        </IndianaDrag>
+        <aside className="wm__aside">
+          <div className="wma__techs-wrapper">
+            <img src={html5} alt="html 5" className='wmatw__tech' />
+            <img src={css3} alt="css 3" className='wmatw__tech' />
+            <img src={js} alt="javascript" className='wmatw__tech' />
+            <img src={ts} alt="typescript" className='wmatw__tech' />
+            <img src={react} alt="react" className='wmatw__tech' />
           </div>
-          <div className="wmca__portrait" />
+          <div className="wma__portrait" />
         </aside>
       </main>
+      <Menu isOpen={menuIsOpen} onClose={() => setMenuIsOpen(false)} />
     </S.Wrapper>
   )
 }
