@@ -20,14 +20,18 @@ export const theme = {
   colors: {
     primary: primaryColors[index],
     primaryHover: transparentize(0.3, primaryColors[index]),
-    text: '#616161',
-    textHover: transparentize(0.3, '#616161'),
     white: '#ffffff',
     black: '#212121',
     blackHover: transparentize(0.3, '#212121'),
+
+    text: '#616161',
+    textHover: transparentize(0.3, '#616161'),
     shape: '#e6e6e6'
   },
   transitions: {
-    default: 'all 200ms ease'
+    default: 'all 300ms ease'
+  },
+  mediaquerys: {
+    laptopStart: 1024
   }
 }
