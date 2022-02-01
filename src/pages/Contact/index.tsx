@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import IndianaDrag from 'react-indiana-drag-scroll'
 import { FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
 
 import Button from '../../components/Button'
@@ -18,17 +19,17 @@ const Contact = (): React.ReactElement => {
         Aqui você encontra todas as minhas redes sociais, será ótimo conversar com você!
       </p>
 
-      <div className="w__links-wrapper">
-        <span className="wlw__item">
+      <IndianaDrag vertical={false} className="w__links-wrapper">
+        <a href='https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/' target='_blank' className="wlw__item">
           <FaLinkedinIn size={50} />
-        </span>
-        <span className="wlw__item">
+        </a>
+        <a href='https://github.com/luis-grizzo' target='_blank' className="wlw__item">
           <FaGithub size={50} />
-        </span>
-        <span className="wlw__item">
+        </a>
+        <a href='https://www.instagram.com/luis_ozzirg/' target='_blank' className="wlw__item">
           <FaInstagram size={50} />
-        </span>
-      </div>
+        </a>
+      </IndianaDrag>
 
       <Button onClick={() => navigate('/')}>
         Voltar para home

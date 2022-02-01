@@ -8,6 +8,8 @@ export const Wrapper = styled.div`
   align-items: flex-start;
   gap: 5rem;
 
+  width: 100%;
+
   .w__title {
     font-size: 7.2rem;
     font-weight: 300;
@@ -18,6 +20,7 @@ export const Wrapper = styled.div`
   }
 
   .w__description {
+    font-size: 2rem;
     color: ${theme.colors.text};
   }
 
@@ -29,7 +32,6 @@ export const Wrapper = styled.div`
 
     width: 100%;
     overflow-x: auto;
-    cursor: grab;
 
     .wlw__item {
       flex: none;
@@ -39,6 +41,7 @@ export const Wrapper = styled.div`
 
       width: 12rem;
       height: 12rem;
+      color: ${theme.colors.black};
       background-color: ${theme.colors.shape};
       border-radius: 2rem;
       cursor: pointer;
