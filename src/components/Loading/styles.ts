@@ -1,6 +1,4 @@
-import styled, { keyframes } from 'styled-components'
-
-import { theme } from '../../styles/theme'
+import styled, { css, keyframes } from 'styled-components'
 
 const rotateHue = keyframes`
   0% {
@@ -13,30 +11,32 @@ const rotateHue = keyframes`
 `
 
 export const Wrapper = styled.div`
-  position: relative;
+  ${({ theme }) => css`
+    position: relative;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    height: 100vh;
 
-  animation: 1000ms ${rotateHue} linear infinite;
+    animation: 1000ms ${rotateHue} linear infinite;
 
-  &::after {
-    content: '';
+    &::after {
+      content: '';
 
-    position: absolute;
-    z-index: -1;
+      position: absolute;
+      z-index: -1;
 
-    width: 10rem;
-    height: 10rem;
+      width: 10rem;
+      height: 10rem;
 
-    border-radius: 50%;
-    background-color: ${theme.colors.white};
-    border: 5px solid ${theme.colors.primary};
-  }
+      border-radius: 50%;
+      background-color: ${theme.colors.white};
+      border: 5px solid ${theme.colors.primary};
+    }
+  `}
 `

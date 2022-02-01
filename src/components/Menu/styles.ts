@@ -1,14 +1,12 @@
 import styled, { css } from 'styled-components'
 import { transparentize } from 'polished'
 
-import { theme } from '../../styles/theme'
-
 import { MenuProps } from '.'
 
 export type StyledWrapperProps = Pick<MenuProps, 'isOpen'>
 
 export const Wrapper = styled.div<StyledWrapperProps>`
-  ${({ isOpen }) => css`
+  ${({ theme, isOpen }) => css`
     visibility: ${isOpen ? 'visible' : 'hidden'};
 
     position: fixed;
