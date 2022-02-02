@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
     height: 100vh;
     width: 90vw;
-    max-width: 1280px;
+    max-width: 128rem;
     margin: 0 auto;
     padding: 5rem 0;
     overflow: hidden;

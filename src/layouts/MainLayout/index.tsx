@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSpring, animated } from 'react-spring'
 import IndianaDrag from 'react-indiana-drag-scroll'
 import { FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
 import { MdMenu } from 'react-icons/md'
@@ -22,9 +23,13 @@ export interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
+  const navbarStyle = useSpring({ from: { opacity: 0, y: -500 }, to: { opacity: 1, y: 0 } })
+
+  const asideStyle = useSpring({ from: { opacity: 0, x: 500 }, to: { opacity: 1, x: 0 } })
+
   return (
     <S.Wrapper>
-      <nav className='w__navbar'>
+      <animated.nav style={navbarStyle} className='w__navbar'>
         <Link to="/" >
           <Logo />
         </Link>
@@ -43,16 +48,15 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
             <MdMenu size={30} className='wnclmb__icon' />
           </button>
         </div>
-      </nav>
+      </animated.nav>
       <main className='w__main'>
         <IndianaDrag
           horizontal={false}
-          hideScrollbars={false}
           className='wm__page'
         >
           {children}
         </IndianaDrag>
-        <aside className="wm__aside">
+        <animated.aside style={asideStyle} className="wm__aside">
           <div className="wma__techs-wrapper">
             <img src={html5} alt="html 5" className='wmatw__tech' />
             <img src={css3} alt="css 3" className='wmatw__tech' />
@@ -61,7 +65,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
             <img src={react} alt="react" className='wmatw__tech' />
           </div>
           <div className="wma__portrait" />
-        </aside>
+        </animated.aside>
       </main>
       <Menu isOpen={menuIsOpen} onClose={() => setMenuIsOpen(false)} />
     </S.Wrapper>
