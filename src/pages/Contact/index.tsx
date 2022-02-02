@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSpring, animated } from 'react-spring'
 import IndianaDrag from 'react-indiana-drag-scroll'
 import { FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
 
@@ -9,8 +10,12 @@ import * as S from './styles'
 const Contact = (): React.ReactElement => {
   const navigate = useNavigate()
 
+  const AnimatedWrapper = animated(S.Wrapper)
+
+  const style = useSpring({ from: { opacity: 0, scale: 0 }, to: { opacity: 1, scale: 1 } })
+
   return (
-    <S.Wrapper>
+    <AnimatedWrapper style={style}>
       <h1 className='w__title'>
         <strong className='wt__highlight'>Redes</strong> sociais
       </h1>
@@ -34,7 +39,7 @@ const Contact = (): React.ReactElement => {
       <Button onClick={() => navigate('/')}>
         Voltar para home
       </Button>
-    </S.Wrapper>
+    </AnimatedWrapper>
   )
 }
 

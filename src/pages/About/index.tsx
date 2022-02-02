@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSpring, animated } from 'react-spring'
 
 import Button from '../../components/Button'
 
@@ -7,8 +8,12 @@ import * as S from './styles'
 const About = (): React.ReactElement => {
   const navigate = useNavigate()
 
+  const AnimatedWrapper = animated(S.Wrapper)
+
+  const style = useSpring({ from: { opacity: 0, x: -500 }, to: { opacity: 1, x: 0 } })
+
   return (
-    <S.Wrapper>
+    <AnimatedWrapper style={style}>
       <h1 className='w__title'>
         <strong className='wt__highlight'>Luís</strong> Otávio <br />
         Gaido <strong className='wt__highlight'>Grizzo</strong>
@@ -31,7 +36,7 @@ const About = (): React.ReactElement => {
       </p>
 
       <Button onClick={() => navigate('/')}>Voltar para home</Button>
-    </S.Wrapper>
+    </AnimatedWrapper>
   )
 }
 
