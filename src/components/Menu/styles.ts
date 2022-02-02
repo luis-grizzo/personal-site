@@ -6,9 +6,7 @@ import { MenuProps } from '.'
 export type StyledWrapperProps = Pick<MenuProps, 'isOpen'>
 
 export const Wrapper = styled.div<StyledWrapperProps>`
-  ${({ theme, isOpen }) => css`
-    visibility: ${isOpen ? 'visible' : 'hidden'};
-
+  ${({ theme }) => css`
     position: fixed;
     top: 0;
     left: 0;
@@ -22,9 +20,6 @@ export const Wrapper = styled.div<StyledWrapperProps>`
     overflow: hidden;
 
     .w__content {
-      visibility: ${isOpen ? 'visible' : 'hidden'};
-
-      transform: ${`translateX(${isOpen ? '0' : '100%'})`};
       z-index: 20;
 
       display: flex;
@@ -40,9 +35,6 @@ export const Wrapper = styled.div<StyledWrapperProps>`
       padding: 5rem;
       box-shadow: 12px 0px 24px 6px ${transparentize(0.8, theme.colors.black)};
       overflow: auto;
-
-      will-change: visibility, opacity, right;
-      transition: ${theme.transitions.default};
 
       .wc__close-button {
         display: flex;
@@ -85,24 +77,14 @@ export const Wrapper = styled.div<StyledWrapperProps>`
     }
 
     .w__overlay {
-      visibility: ${isOpen ? 'visible' : 'hidden'};
-      opacity: ${isOpen ? '1' : '0'};
-
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       z-index: 10;
 
-      width: 100%;
-      height: 100%;
-      background-color: transparent;
-      border: none;
-      padding: 0;
-      backdrop-filter: blur(4px); //${isOpen ? 'blur(4px)' : 'blur(0px)'};
-      cursor: pointer;
-
-      /* will-change: backdrop-filter; */
-      transition: ${theme.transitions.default};
+      width: 100vw;
+      height: 100vh;
+      backdrop-filter: blur(2px);
      }
   `}
 
