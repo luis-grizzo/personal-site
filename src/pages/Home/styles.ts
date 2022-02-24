@@ -27,10 +27,10 @@ export const Wrapper = styled.div`
         color: ${theme.colors.primary};
 
         will-change: color;
-        transition: ${theme.transitions.default};
+        transition: ${`color ${theme.transitions.new}`};
 
         &:hover {
-          color: ${theme.colors.primaryHover}
+          color: ${theme.colors.primaryHover};
         }
       }
     }
@@ -40,6 +40,39 @@ export const Wrapper = styled.div`
       align-items: center;
       flex-wrap: wrap;
       gap: 2rem;
+    }
+  `}
+`
+export const Card = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    overflow: hidden;
+
+    @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+      max-height: 35rem;
+    }
+
+    &::before {
+      display: flex;
+
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 75%;
+      border-radius: 2rem;
+      background: ${theme.colors.primary};
+      z-index: -1;
+    }
+
+    .c__image {
+      height: 100%;
     }
   `}
 `
