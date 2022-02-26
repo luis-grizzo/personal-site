@@ -6,9 +6,13 @@ export type ButtonProps = {
   variant?: ButtonVariants
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({ variant = 'primary', children, ...props }: ButtonProps): React.ReactElement => {
+const Button = ({
+  variant = 'primary',
+  children,
+  ...props
+}: ButtonProps): React.ReactElement => {
   return (
-    <S.Wrapper type='button' variant={variant} {...props}>
+    <S.Wrapper type="button" variant={variant} {...props}>
       {children}
     </S.Wrapper>
   )
