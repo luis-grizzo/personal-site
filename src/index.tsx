@@ -10,8 +10,8 @@ import { theme } from './styles/theme'
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <GlobalStyle/>
-      <Routes/>
+      <GlobalStyle />
+      <Routes />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
