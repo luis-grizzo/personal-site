@@ -84,8 +84,8 @@ export const Wrapper = styled.div<StyledWrapperProps>`
 
       width: 100vw;
       height: 100vh;
+      background-color: ${transparentize(0.95, theme.colors.black)};
       backdrop-filter: blur(2px);
-     }
+    }
   `}
-
 `

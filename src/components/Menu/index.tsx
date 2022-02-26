@@ -37,22 +37,51 @@ const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
     reverse: isOpen
   })
 
-  return wrapperTransition((style, item) => item && (
-    <AnimatedWrapper styles={style}>
-      {contentTransition((style, item) => item && (
-        <animated.div style={style} className="w__content">
-          <button type='button' onClick={() => onClose?.()} className='wc__close-button'>
-            <MdClose size={30} />
-          </button>
-          {menuItems.map((item, key) => (
-            <Link key={key} to={item.path} onClick={() => onClose?.()}>
-              <span className={`wc__item ${pathname === item.path ? 'wc__item--active' : ''}`}>{item.description}</span>
-            </Link>
-          ))}
-        </animated.div>
-      ))}
-      {overlayTransition((style, item) => item && <animated.div style={style} onClick={() => onClose?.()} className="w__overlay"/>)}
-    </AnimatedWrapper>
-  ))
+  return wrapperTransition(
+    (style, item) =>
+      item && (
+        <AnimatedWrapper styles={style}>
+          {contentTransition(
+            (style, item) =>
+              item && (
+                <animated.div style={style} className="w__content">
+                  <button
+                    type="button"
+                    onClick={() => onClose?.()}
+                    className="wc__close-button"
+                  >
+                    <MdClose size={30} />
+                  </button>
+                  {menuItems.map((item) => (
+                    <Link
+                      key={item.id}
+                      to={item.path}
+                      onClick={() => onClose?.()}
+                    >
+                      <span
+                        className={`wc__item ${
+                          pathname === item.path ? 'wc__item--active' : ''
+                        }`}
+                      >
+                        {item.description}
+                      </span>
+                    </Link>
+                  ))}
+                </animated.div>
+              )
+          )}
+          {overlayTransition(
+            (style, item) =>
+              item && (
+                <animated.div
+                  style={style}
+                  onClick={() => onClose?.()}
+                  className="w__overlay"
+                />
+              )
+          )}
+        </AnimatedWrapper>
+      )
+  )
 }
 export default Menu
