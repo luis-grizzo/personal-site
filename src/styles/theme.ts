@@ -26,12 +26,14 @@ export const theme = {
 
     text: '#616161',
     textHover: transparentize(0.3, '#616161'),
-    shape: '#e6e6e6'
+    shape: '#e6e6e6',
+    background: '#fafafa'
   },
   transitions: {
-    default: 'all 300ms ease'
+    default: 'all 300ms ease',
+    new: '300ms ease'
   },
   mediaquerys: {
     laptopStart: 1024
   }
-}
+} as const

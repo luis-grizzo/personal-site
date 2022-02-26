@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
 
     html {
       font-size: 62.5%;
+      background-color: ${theme.colors.background};
     }
 
     body,
@@ -96,6 +97,35 @@ const GlobalStyle = createGlobalStyle`
 
     a {
       text-decoration: none;
+    }
+
+    .custom-scroll {
+      overflow-y: overlay;
+      overflow-x: hidden;
+
+      ::-webkit-scrollbar {
+        opacity: 0;
+        width: 8px;
+      }
+
+      &:hover {
+        ::-webkit-scrollbar {
+          opacity: 1;
+        }
+
+        ::-webkit-scrollbar-track {
+          opacity: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background-color: ${theme.colors.text};
+          border-radius: 1rem;
+
+          &:hover {
+            background-color: ${theme.colors.textHover};
+          }
+        }
+      }
     }
   `}
 `
