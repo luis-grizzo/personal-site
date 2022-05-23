@@ -1,42 +1,107 @@
 import { useNavigate } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 
-import Button from '../../components/Button'
+import { Button, TextRender, TextProps } from 'components'
+
+import { useSpringHorizontalAnimation } from 'shared/animations'
+import { handlePageChange } from 'shared/utils'
+import { socialMedia } from 'shared/constants'
 
 import * as S from './styles'
 
 const About = (): React.ReactElement => {
   const navigate = useNavigate()
 
-  const AnimatedWrapper = animated(S.Wrapper)
+  const titleAnimation = useSpring({ ...useSpringHorizontalAnimation })
 
-  const style = useSpring({ from: { opacity: 0, x: -500 }, to: { opacity: 1, x: 0 } })
+  const buttonsAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    delay: 100
+  })
+
+  const linkedin = socialMedia.find((item) => 'LinkedIn'.includes(item.name))
+
+  const github = socialMedia.find((item) => 'Github'.includes(item.name))
+
+  const texts: TextProps[] = [
+    {
+      id: 0,
+      paragraph: (
+        <>
+          Olá! eu sou{' '}
+          <a
+            href={linkedin?.url}
+            title={linkedin?.name}
+            target="_blank"
+            className="wt__highlight"
+            rel="noreferrer"
+          >
+            Luís Grizzo
+          </a>
+          , desenvolvedor Frontend desde 2019, desenvolvo aplicações web
+          utilizando HTML , CSS e a linguagem Javascript com o framework{' '}
+          React.js , também utilizo a linguagem Typescript em meus projetos,
+          visando trabalhar com as tecnologias mais modernas do mercado.
+        </>
+      )
+    },
+    {
+      id: 1,
+      paragraph: (
+        <>
+          Gosto também de desenvolver a interface dos meus projetos, aplicando
+          os conceitos de UI-Design, para desenvolve-las, utilizo o Figma, um
+          software de criação de interfaces de aplicações.
+        </>
+      )
+    },
+    {
+      id: 2,
+      paragraph: (
+        <>
+          Para ver meus projetos já desenvolvidos, te convido a acessar meu
+          perfil no{' '}
+          <a
+            href={github?.url}
+            title={github?.name}
+            target="_blank"
+            className="wt__highlight"
+            rel="noreferrer"
+          >
+            Github
+          </a>{' '}
+          , uma plataforma de versionamento de código e comunidade de
+          programadores.
+        </>
+      )
+    }
+  ]
 
   return (
-    <AnimatedWrapper style={style}>
-      <h1 className='w__title'>
-        <strong className='wt__highlight'>Luís</strong> Otávio <br />
-        Gaido <strong className='wt__highlight'>Grizzo</strong>
-      </h1>
+    <>
+      <span>aside</span>
 
-      <p className="w__text">
-        Natural de Jaú, São Paulo, Brasil. Tive o primeiro contato com desenvolvimento web nas aulas do curso técnico integrado ao ensino médio, ao conhecer mais, me familiarizei e me apaixonando com este tão grande e belo mundo da programação!
-      </p>
+      <S.Wrapper>
+        <animated.h1 style={titleAnimation} className="w__title">
+          <strong className="wt__highlight">Sobre</strong> Mim
+        </animated.h1>
 
-      <p className="w__text">
-        Pretendendo trabalhar na área, ingressei na faculdade de tecnologia de Jaú, onde tive um conhecimento mais profundo e uma visão mais ampla de mundo da programação Frontend e suas diversas possibilidades.
-      </p>
+        <TextRender texts={texts} />
 
-      <p className="w__text">
-        Em 2019, consegui meu primeiro estágio na área, onde tive um grande desenvolvimento profissional e técnico, tendo o primeiro contato com as tecnologias mais avançadas do mercado e do dia-a-dia de uma empresa de tecnologia.
-      </p>
+        {/* <animated.div style={buttonsAnimation} className="w__button-wrapper">
+          <Button onClick={() => handlePageChange(navigate('/contact'))}>
+            Contato
+          </Button>
 
-      <p className="w__text">
-        Em 2020, consegui meu primeiro cargo efetivo como desenvolvedor Frontend e venho desempenhando a função desde então, sempre estudando e me desafiando para me tornar um profissional cada vez melhor!
-      </p>
-
-      <Button onClick={() => navigate('/')}>Voltar para home</Button>
-    </AnimatedWrapper>
+          <Button
+            variant="secondary"
+            onClick={() => handlePageChange(navigate('/'))}
+          >
+            Voltar para home
+          </Button>
+        </animated.div> */}
+      </S.Wrapper>
+    </>
   )
 }
 
