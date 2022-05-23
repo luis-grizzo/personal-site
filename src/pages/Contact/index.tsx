@@ -1,45 +1,57 @@
 import { useNavigate } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
-import IndianaDrag from 'react-indiana-drag-scroll'
-import { FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
 
-import Button from '../../components/Button'
+import { Button, Grid } from 'components'
+
+import { useSpringHorizontalAnimation } from 'shared/animations'
+import { handlePageChange } from 'shared/utils'
+import { socialMedia } from 'shared/constants'
 
 import * as S from './styles'
 
 const Contact = (): React.ReactElement => {
   const navigate = useNavigate()
 
-  const AnimatedWrapper = animated(S.Wrapper)
+  const titleAnimation = useSpring({ ...useSpringHorizontalAnimation })
 
-  const style = useSpring({ from: { opacity: 0, scale: 0 }, to: { opacity: 1, scale: 1 } })
+  const textAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    delay: 100
+  })
+
+  const buttonsAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    delay: 200
+  })
 
   return (
-    <AnimatedWrapper style={style}>
-      <h1 className='w__title'>
-        <strong className='wt__highlight'>Redes</strong> sociais
-      </h1>
+    <>
+      <Grid items={socialMedia} />
 
-      <p className="w__description">
-        Aqui você encontra todas as minhas redes sociais, será ótimo conversar com você!
-      </p>
+      <S.Wrapper>
+        <animated.h1 style={titleAnimation} className="w__title">
+          <strong className="wt__highlight">Redes</strong> sociais
+        </animated.h1>
 
-      <IndianaDrag vertical={false} className="w__links-wrapper">
-        <a href='https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/' target='_blank' className="wlw__item">
-          <FaLinkedinIn size={50} />
-        </a>
-        <a href='https://github.com/luis-grizzo' target='_blank' className="wlw__item">
-          <FaGithub size={50} />
-        </a>
-        <a href='https://www.instagram.com/luis_ozzirg/' target='_blank' className="wlw__item">
-          <FaInstagram size={50} />
-        </a>
-      </IndianaDrag>
+        <animated.p style={textAnimation} className="w__description">
+          Aqui você encontra todas as minhas redes sociais e formas de contato,
+          será ótimo conversar com você!
+        </animated.p>
 
-      <Button onClick={() => navigate('/')}>
-        Voltar para home
-      </Button>
-    </AnimatedWrapper>
+        <animated.div style={buttonsAnimation} className="w__button-wrapper">
+          <Button onClick={() => handlePageChange(navigate('/about'))}>
+            Sobre Mim
+          </Button>
+
+          <Button
+            variant="secondary"
+            onClick={() => handlePageChange(navigate('/'))}
+          >
+            Voltar para home
+          </Button>
+        </animated.div>
+      </S.Wrapper>
+    </>
   )
 }
 

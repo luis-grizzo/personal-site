@@ -53,5 +53,12 @@ export const Wrapper = styled.div`
         }
       }
     }
+
+    .w__button-wrapper {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
   `}
 `
