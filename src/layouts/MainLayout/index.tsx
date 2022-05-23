@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { cloneElement, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
-import { FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
 import { MdMenu } from 'react-icons/md'
 
-import Logo from 'components/Logo'
-import Menu from 'components/Menu'
+import { Logo, Menu } from 'components'
+
+import { socialMedia } from 'shared/constants'
 
 import * as S from './styles'
 
@@ -16,14 +16,7 @@ export interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
-  const navbarAnimation = useSpring({
-    from: {
-      y: -300
-    },
-    to: {
-      y: 0
-    }
-  })
+  const navbarAnimation = useSpring({ from: { y: -300 }, to: { y: 0 } })
 
   return (
     <S.Wrapper>
@@ -32,31 +25,24 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
           <Logo />
         </Link>
         <div className="wn__link-wrapper">
-          <a
-            href="https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/"
-            target="_blank"
-            className="wnlw__link"
-            rel="noreferrer"
-          >
-            <FaLinkedinIn size={30} />
-          </a>
-          <a
-            href="https://github.com/luis-grizzo"
-            target="_blank"
-            className="wnlw__link"
-            rel="noreferrer"
-          >
-            <FaGithub size={30} />
-          </a>
-          <a
-            href="https://www.instagram.com/luis_ozzirg/"
-            target="_blank"
-            className="wnlw__link"
-            rel="noreferrer"
-          >
-            <FaInstagram size={30} />
-          </a>
+          {socialMedia.map(
+            (item) =>
+              ['Instagram', 'LinkedIn', 'Github'].includes(item.name) && (
+                <a
+                  key={item.name}
+                  href={item.url}
+                  title={item.name}
+                  target="_blank"
+                  className="wnlw__link"
+                  rel="noreferrer"
+                >
+                  {cloneElement(item.icon, { size: 30 })}
+                </a>
+              )
+          )}
+
           <span className="wnlw__divider" />
+
           <button
             type="button"
             onClick={() => setMenuIsOpen((prevState) => !prevState)}
@@ -66,7 +52,9 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
           </button>
         </div>
       </animated.nav>
+
       <main className="w__main">{children}</main>
+
       <Menu isOpen={menuIsOpen} onClose={() => setMenuIsOpen(false)} />
     </S.Wrapper>
   )
