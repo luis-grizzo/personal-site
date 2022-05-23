@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 
-import Button from 'components/Button'
+import { Button } from 'components'
 
 import { useSpringHorizontalAnimation } from 'shared/animations'
+import { handlePageChange } from 'shared/utils'
+import { socialMedia } from 'shared/constants'
 
 import portrait from 'assets/portrait.png'
 
@@ -12,26 +14,21 @@ import * as S from './styles'
 const Home = (): React.ReactElement => {
   const navigate = useNavigate()
 
-  const imageAnimation = useSpring({
-    from: {
-      y: 300
-    },
-    to: {
-      y: 0
-    }
-  })
+  const imageAnimation = useSpring({ from: { y: 300 }, to: { y: 0 } })
 
-  const titleAnimation = useSpring({
-    ...useSpringHorizontalAnimation
-  })
+  const titleAnimation = useSpring({ ...useSpringHorizontalAnimation })
+
   const textAnimation = useSpring({
     ...useSpringHorizontalAnimation,
     delay: 100
   })
+
   const buttonsAnimation = useSpring({
     ...useSpringHorizontalAnimation,
     delay: 200
   })
+
+  const linkedin = socialMedia.find((item) => 'LinkedIn'.includes(item.name))
 
   return (
     <>
@@ -54,8 +51,9 @@ const Home = (): React.ReactElement => {
         <animated.p style={textAnimation} className="w__description">
           Me chamo{' '}
           <a
-            href="https://www.linkedin.com/in/lu%C3%ADs-ot%C3%A1vio-gaido-grizzo-2a957a1b2/"
+            href={linkedin?.url}
             target="_blank"
+            title={linkedin?.name}
             className="wd__link"
             rel="noreferrer"
           >
@@ -66,9 +64,14 @@ const Home = (): React.ReactElement => {
         </animated.p>
 
         <animated.div style={buttonsAnimation} className="w__button-wrapper">
-          <Button onClick={() => navigate('/contact')}>Entre em contato</Button>
+          <Button onClick={() => handlePageChange(navigate('/contact'))}>
+            Entre em contato
+          </Button>
 
-          <Button variant="secondary" onClick={() => navigate('/about')}>
+          <Button
+            variant="secondary"
+            onClick={() => handlePageChange(navigate('/about'))}
+          >
             Sobre mim
           </Button>
         </animated.div>
