@@ -2,7 +2,7 @@ import { theme } from '../../styles/theme'
 
 export type LogoProps = React.SVGAttributes<HTMLOrSVGElement>
 
-const Logo = ({ ...props }: LogoProps): React.ReactElement => {
+export const Logo = ({ ...props }: LogoProps): React.ReactElement => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -113,5 +113,3 @@ const Logo = ({ ...props }: LogoProps): React.ReactElement => {
     </svg>
   )
 }
-
-export default Logo

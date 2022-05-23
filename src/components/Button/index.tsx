@@ -6,7 +6,7 @@ export type ButtonProps = {
   variant?: ButtonVariants
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({
+export const Button = ({
   variant = 'primary',
   children,
   ...props
@@ -17,5 +17,3 @@ const Button = ({
     </S.Wrapper>
   )
 }
-
-export default Button

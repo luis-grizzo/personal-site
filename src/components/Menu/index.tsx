@@ -2,6 +2,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { useTransition, animated } from 'react-spring'
 import { MdClose } from 'react-icons/md'
 
+import { handlePageChange } from 'shared/utils'
+
 import * as S from './styles'
 
 import { menuItems } from './menuItems'
@@ -11,7 +13,7 @@ export type MenuProps = {
   onClose?: () => void
 } & React.BaseHTMLAttributes<HTMLDivElement>
 
-const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
+export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
   const { pathname } = useLocation()
 
   const AnimatedWrapper = animated(S.Wrapper)
@@ -56,7 +58,7 @@ const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
                     <Link
                       key={item.id}
                       to={item.path}
-                      onClick={() => onClose?.()}
+                      onClick={() => handlePageChange(onClose?.())}
                     >
                       <span
                         className={`wc__item ${
@@ -84,4 +86,3 @@ const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
       )
   )
 }
-export default Menu

@@ -1,10 +1,10 @@
 import { useSpring, animated } from 'react-spring'
 
-import Logo from '../Logo'
+import { Logo } from 'components'
 
 import * as S from './styles'
 
-const Loading = (): React.ReactElement => {
+export const Loading = (): React.ReactElement => {
   const AnimatedWrapper = animated(S.Wrapper)
 
   const style = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } })
@@ -15,5 +15,3 @@ const Loading = (): React.ReactElement => {
     </AnimatedWrapper>
   )
 }
-
-export default Loading
