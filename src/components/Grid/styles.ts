@@ -12,7 +12,6 @@ export const Grid = styled.div`
 
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
       grid-template-columns: repeat(6, auto);
-      /* overflow: overlay; */
       overflow-y: hidden;
       width: 100%;
     }

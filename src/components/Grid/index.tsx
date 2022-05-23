@@ -15,13 +15,12 @@ type GridProps = {
 }
 
 export type ItemProps = {
-  id: number
+  name: string
   url: string
-  description: string
-  content: React.ReactElement
+  icon: React.ReactElement
 }
 
-const Grid = ({ items }: GridProps): React.ReactElement => {
+export const Grid = ({ items }: GridProps): React.ReactElement => {
   const [isDesktop, setIsDesktop] = useState(
     !!(window.innerWidth > theme.mediaquerys.laptopStart)
   )
@@ -43,15 +42,15 @@ const Grid = ({ items }: GridProps): React.ReactElement => {
     <S.Grid>
       {trail.map((animation, index) => (
         <animated.a
-          key={items[index].id}
+          key={items[index].name}
           href={items[index].url}
-          title={items[index].description}
+          title={items[index].name}
           style={animation}
           target="_blank"
           className="g__item"
           rel="noreferrer"
         >
-          {cloneElement(items[index].content, {
+          {cloneElement(items[index].icon, {
             size: 50,
             className: 'gi__icon'
           })}
@@ -60,5 +59,3 @@ const Grid = ({ items }: GridProps): React.ReactElement => {
     </S.Grid>
   )
 }
-
-export default Grid
