@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     html {
       font-size: 62.5%;
       background-color: ${theme.colors.background};
+      scroll-behavior: smooth;
     }
 
     body,
@@ -103,27 +104,33 @@ const GlobalStyle = createGlobalStyle`
       overflow-y: overlay;
       overflow-x: hidden;
 
+      padding-right: 0.4rem;
+
       ::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      ::-webkit-scrollbar-track {
         opacity: 0;
-        width: 8px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: ${theme.colors.text};
+        border-radius: 1rem;
+
+        &:hover {
+          background-color: ${theme.colors.textHover};
+        }
       }
 
       &:hover {
+        overflow-y: overlay;
+        overflow-x: hidden;
+
+        padding-right: 0.8rem;
+
         ::-webkit-scrollbar {
-          opacity: 1;
-        }
-
-        ::-webkit-scrollbar-track {
-          opacity: 0;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background-color: ${theme.colors.text};
-          border-radius: 1rem;
-
-          &:hover {
-            background-color: ${theme.colors.textHover};
-          }
+          width: 8px;
         }
       }
     }
