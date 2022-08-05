@@ -1,11 +1,15 @@
 import styled, { css } from 'styled-components'
 
-type StyledMoreTextEffect = {
+type StyledTextFadeTop = {
+  isTopScroll: boolean
+}
+
+type StyledTextFadeBottom = {
   isFullScrolled: boolean
 }
 
-const modifiers = {
-  isFullScrolled: () => css`
+const textFadeModifiers = {
+  desactive: () => css`
     opacity: 0;
     visibility: hidden;
   `
@@ -19,17 +23,33 @@ export const Wrapper = styled.div`
   overflow: hidden;
 `
 
-export const MoreTextEffect = styled.div<StyledMoreTextEffect>`
+export const TextFadeTop = styled.div<StyledTextFadeTop>`
+  ${({ theme, isTopScroll }) => css`
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 25%;
+    width: calc(100% - 1.6rem);
+    background-image: ${`linear-gradient(to bottom, ${theme.colors.background}, transparent)`};
+    transition: ${`opacity ${theme.transitions.new}, visibility ${theme.transitions.new}`};
+
+    ${isTopScroll && textFadeModifiers.desactive()}
+  `}
+`
+
+export const TextFadeBottom = styled.div<StyledTextFadeBottom>`
   ${({ theme, isFullScrolled }) => css`
     position: absolute;
     bottom: 0;
+    left: 0;
 
     height: 25%;
-    width: 100%;
+    width: calc(100% - 1.6rem);
     background-image: ${`linear-gradient(to top, ${theme.colors.background}, transparent)`};
     transition: ${`opacity ${theme.transitions.new}, visibility ${theme.transitions.new}`};
 
-    ${isFullScrolled && modifiers.isFullScrolled()}
+    ${isFullScrolled && textFadeModifiers.desactive()}
   `}
 `
 
@@ -41,15 +61,6 @@ export const TextContainer = styled.div`
     gap: 2.5rem;
 
     overflow: auto;
-    /* &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-
-      width: 100%;
-      height: 25%;
-
-    } */
 
     .w__text {
       font-size: 2rem;
