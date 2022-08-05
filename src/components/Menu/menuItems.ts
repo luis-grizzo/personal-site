@@ -11,6 +11,11 @@ export const menuItems = [
   },
   {
     id: 2,
+    description: 'Portfólio',
+    path: '/portfolio'
+  },
+  {
+    id: 3,
     description: 'Contato',
     path: '/contact'
   }
