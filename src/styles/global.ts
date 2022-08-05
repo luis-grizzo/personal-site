@@ -104,10 +104,10 @@ const GlobalStyle = createGlobalStyle`
       overflow-y: overlay;
       overflow-x: hidden;
 
-      padding-right: 0.4rem;
+      padding-right: 1.6rem;
 
       ::-webkit-scrollbar {
-        width: 4px;
+        width: 0.8rem;
       }
 
       ::-webkit-scrollbar-track {
@@ -120,17 +120,6 @@ const GlobalStyle = createGlobalStyle`
 
         &:hover {
           background-color: ${theme.colors.textHover};
-        }
-      }
-
-      &:hover {
-        overflow-y: overlay;
-        overflow-x: hidden;
-
-        padding-right: 0.8rem;
-
-        ::-webkit-scrollbar {
-          width: 8px;
         }
       }
     }
