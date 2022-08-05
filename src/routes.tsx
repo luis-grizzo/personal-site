@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { Loading } from 'components'
 
+import { ActivePageProvider } from 'shared/hooks'
+
 const MainLayout = lazy(async () => await import('./layouts/MainLayout'))
 
 const Home = lazy(async () => await import('./pages/Home'))
@@ -13,13 +15,15 @@ const Router = (): React.ReactElement => {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
-        <MainLayout>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </MainLayout>
+        <ActivePageProvider>
+          <MainLayout>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </MainLayout>
+        </ActivePageProvider>
       </Suspense>
     </BrowserRouter>
   )
