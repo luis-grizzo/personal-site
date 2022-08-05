@@ -1,5 +1,33 @@
 import styled, { css } from 'styled-components'
 
+export const Page = styled.main`
+  ${({ theme }) => css`
+    display: grid;
+    grid-template-columns: calc(40% - 2.5rem) calc(60% - 2.5rem);
+    align-items: center;
+    gap: 5rem;
+
+    height: 100%;
+    width: 100%;
+    padding: 2.5rem 0 14.5rem;
+    overflow: hidden;
+
+    @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+      grid-template-columns: 1fr;
+
+      padding: 2.5rem 0;
+
+      [class*='title'] {
+        font-size: 5.8rem;
+      }
+
+      [class*='description'] {
+        line-height: normal;
+      }
+    }
+  `}
+`
+
 export const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
