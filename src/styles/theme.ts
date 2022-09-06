@@ -1,4 +1,4 @@
-import { transparentize } from 'polished'
+import { darken, transparentize } from 'polished'
 
 const index = Math.round(Math.random() * 10)
 
@@ -27,6 +27,7 @@ export const theme = {
     text: '#616161',
     textHover: transparentize(0.3, '#616161'),
     shape: '#e6e6e6',
+    shapeHover: darken(0.3, '#e6e6e6'),
     background: '#fafafa'
   },
   transitions: {
@@ -34,6 +35,7 @@ export const theme = {
     new: '300ms ease'
   },
   mediaquerys: {
-    laptopStart: 1024
+    laptopStart: 1024,
+    tabletStart: 768
   }
 } as const

@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
       font-family: 'Poppins', sans-serif;
       font-size: 2rem;
       font-weight: 400;
-      line-height: 1;
+      line-height: normal;
     }
 
     *,
@@ -67,6 +67,7 @@ const GlobalStyle = createGlobalStyle`
     h6 {
       font-size: inherit;
       font-weight: inherit;
+      line-height: 1;
     }
 
     ol,
