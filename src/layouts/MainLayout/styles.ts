@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
     margin: 0 auto;
     overflow: hidden;
 
+    // Configuração para telas mobile & tablets - Tela < 1024px
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
       height: auto;
       min-height: 100vh;
@@ -44,6 +45,27 @@ export const Wrapper = styled.div`
 
           &:hover {
             color: ${theme.colors.blackHover};
+          }
+        }
+
+        .wnlw__link {
+          font-weight: 400;
+          color: ${theme.colors.text};
+          text-transform: uppercase;
+          cursor: pointer;
+
+          will-change: color;
+          transition: ${`color ${theme.transitions.new}`};
+
+          &:hover:not(.wnlw__link--active) {
+            color: ${theme.colors.textHover};
+          }
+
+          &--active {
+            color: ${theme.colors.black};
+            font-weight: 700;
+            cursor: default;
+            pointer-events: none;
           }
         }
 
