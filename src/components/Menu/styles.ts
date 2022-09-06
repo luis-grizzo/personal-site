@@ -19,6 +19,8 @@ export const Wrapper = styled.div<StyledWrapperProps>`
     height: 100vh;
     overflow: hidden;
 
+    z-index: 10;
+
     .w__content {
       z-index: 20;
 
@@ -60,9 +62,10 @@ export const Wrapper = styled.div<StyledWrapperProps>`
         font-size: 4.8rem;
         color: ${theme.colors.text};
         text-transform: uppercase;
+        cursor: pointer;
 
         will-change: color;
-        transition: ${theme.transitions.default};
+        transition: ${`color ${theme.transitions.new}`};
 
         &:hover:not(.wc__item--active) {
           color: ${theme.colors.textHover};
@@ -72,6 +75,7 @@ export const Wrapper = styled.div<StyledWrapperProps>`
           color: ${theme.colors.black};
           font-weight: 700;
           cursor: default;
+          pointer-events: none;
         }
       }
     }
@@ -84,7 +88,6 @@ export const Wrapper = styled.div<StyledWrapperProps>`
 
       width: 100vw;
       height: 100vh;
-      background-color: ${transparentize(0.95, theme.colors.black)};
       backdrop-filter: blur(2px);
     }
   `}

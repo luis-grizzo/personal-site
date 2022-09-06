@@ -1,8 +1,6 @@
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useTransition, animated } from 'react-spring'
 import { MdClose } from 'react-icons/md'
-
-import { handlePageChange } from 'shared/utils'
 
 import * as S from './styles'
 
@@ -14,8 +12,6 @@ export type MenuProps = {
 } & React.BaseHTMLAttributes<HTMLDivElement>
 
 export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
-  const { pathname } = useLocation()
-
   const AnimatedWrapper = animated(S.Wrapper)
 
   const wrapperTransition = useTransition(isOpen, {
@@ -55,19 +51,16 @@ export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
                     <MdClose size={30} />
                   </button>
                   {menuItems.map((item) => (
-                    <Link
+                    <NavLink
                       key={item.id}
                       to={item.path}
-                      onClick={() => handlePageChange(onClose?.())}
+                      onClick={() => onClose?.()}
+                      className={({ isActive }) =>
+                        `wc__item ${isActive ? 'wc__item--active' : ''}`
+                      }
                     >
-                      <span
-                        className={`wc__item ${
-                          pathname === item.path ? 'wc__item--active' : ''
-                        }`}
-                      >
-                        {item.description}
-                      </span>
-                    </Link>
+                      {item.description}
+                    </NavLink>
                   ))}
                 </animated.div>
               )
