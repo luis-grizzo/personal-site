@@ -2,6 +2,8 @@ import { NavLink } from 'react-router-dom'
 import { useTransition, animated } from 'react-spring'
 import { MdClose } from 'react-icons/md'
 
+import { Button } from 'components'
+
 import * as S from './styles'
 
 import { menuItems } from './menuItems'
@@ -43,13 +45,10 @@ export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
             (style, item) =>
               item && (
                 <animated.div style={style} className="w__content">
-                  <button
-                    type="button"
-                    onClick={() => onClose?.()}
-                    className="wc__close-button"
-                  >
+                  <Button variant="ghost" onClick={() => onClose?.()}>
                     <MdClose size={30} />
-                  </button>
+                  </Button>
+
                   {menuItems.map((item) => (
                     <NavLink
                       key={item.id}
@@ -65,6 +64,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
                 </animated.div>
               )
           )}
+
           {overlayTransition(
             (style, item) =>
               item && (

@@ -38,25 +38,6 @@ export const Wrapper = styled.div<StyledWrapperProps>`
       box-shadow: 12px 0px 24px 6px ${transparentize(0.8, theme.colors.black)};
       overflow: auto;
 
-      .wc__close-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 0;
-        border: 0;
-        background-color: transparent;
-        color: ${theme.colors.black};
-        cursor: pointer;
-
-        will-change: color;
-        transition: ${theme.transitions.default};
-
-        &:hover {
-          color: ${theme.colors.blackHover};
-        }
-      }
-
       .wc__item {
         font-weight: 300;
         font-size: 4.8rem;
