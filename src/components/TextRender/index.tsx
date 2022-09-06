@@ -1,9 +1,7 @@
 import { useRef, useState, useLayoutEffect } from 'react'
 import { useTrail, animated } from 'react-spring'
 
-import { Button } from 'components/Button'
-
-import { useTrailVerticalAnimation } from 'shared/animations'
+import { useTrailHorizontalAnimation } from 'shared/animations'
 
 import * as S from './styles'
 
@@ -20,13 +18,16 @@ export const TextRender = ({ texts }: TextRenderProps): React.ReactElement => {
   const textRenderRef = useRef<HTMLDivElement>(null)
 
   const [isFullScrolled, setIsFullScrolled] = useState(false)
+  const [isTopScroll, setIsTopScroll] = useState(false)
 
-  const trail = useTrail(texts.length, { ...useTrailVerticalAnimation })
+  const trail = useTrail(texts.length, useTrailHorizontalAnimation)
 
-  const handleIsFullScrolled = (): void => {
+  const handleScroll = (): void => {
     const offsetHeight = textRenderRef.current?.offsetHeight ?? 0
     const scrollTop = textRenderRef.current?.scrollTop ?? 0
     const scrollHeight = textRenderRef.current?.scrollHeight ?? 0
+
+    scrollTop === 0 ? setIsTopScroll(true) : setIsTopScroll(false)
 
     offsetHeight + scrollTop >= scrollHeight
       ? setIsFullScrolled(true)
@@ -34,13 +35,12 @@ export const TextRender = ({ texts }: TextRenderProps): React.ReactElement => {
   }
 
   useLayoutEffect(() => {
-    textRenderRef.current?.offsetHeight ===
-      textRenderRef.current?.scrollHeight && setIsFullScrolled(true)
+    handleScroll()
 
-    textRenderRef?.current?.addEventListener('scroll', handleIsFullScrolled)
+    textRenderRef.current?.addEventListener('scroll', handleScroll)
 
     return () =>
-      textRenderRef.current?.removeEventListener('scroll', handleIsFullScrolled)
+      textRenderRef.current?.removeEventListener('scroll', handleScroll)
   })
 
   return (
@@ -57,8 +57,8 @@ export const TextRender = ({ texts }: TextRenderProps): React.ReactElement => {
         ))}
       </S.TextContainer>
 
-      <Button onClick={() => console.log(textRenderRef)}>test</Button>
-      <S.MoreTextEffect isFullScrolled={isFullScrolled} />
+      <S.TextFadeTop isTopScroll={isTopScroll} />
+      <S.TextFadeBottom isFullScrolled={isFullScrolled} />
     </S.Wrapper>
   )
 }
