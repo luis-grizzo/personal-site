@@ -1,64 +1,92 @@
-import { useState } from 'react'
-import { animated, useTransition } from 'react-spring'
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
+import { useSprings, animated, useTrail } from 'react-spring'
+import { FaReact } from 'react-icons/fa'
+
+import { FetchReposProps } from 'services'
+
+import { useTrailVerticalAnimation } from 'shared/animations'
 
 import * as S from './styles'
 
-import foto1 from 'assets/foto1.jpg'
-import foto2 from 'assets/foto2.jpg'
-import foto3 from 'assets/foto3.jpg'
+type CarouselProps = {
+  items: FetchReposProps[]
+}
 
-type ImagesProps = {
-  description: string
-  file: string
-}[]
+export const Carousel = ({ items }: CarouselProps): React.ReactElement => {
+  const [activeItem, setActiveItem] = useState(0)
+  const [pauseAnimation, setPauseAnimation] = useState(false)
 
-export const Carousel = (): React.ReactElement => {
-  const [activeImage, setActiveImage] = useState(0)
+  const [animations, animationsApi] = useSprings(items.length, () => ({
+    transform: 'translateY(100%)',
+    scale: 0.95,
+    opacity: 0
+  }))
 
-  const images: ImagesProps = [
-    {
-      description: 'foto 1',
-      file: foto1
-    },
-    {
-      description: 'foto 2',
-      file: foto2
-    },
-    {
-      description: 'foto 3',
-      file: foto3
-    }
-  ]
+  const dotsTrailAnimation = useTrail(items.length, useTrailVerticalAnimation)
 
-  const imageTransition = useTransition(activeImage, {
-    from: { x: 500 },
-    enter: { x: 0 },
-    leave: { x: -500 },
-    reverse: !!activeImage
+  useLayoutEffect(() => {
+    handleAnimation()
   })
 
+  useEffect(() => {
+    const updateItem = setTimeout(() => {
+      handleAnimation()
+
+      setActiveItem((prevState) => {
+        if (prevState + 1 === items.length) return 0
+        return prevState + 1
+      })
+    }, 3000)
+
+    pauseAnimation && clearTimeout(updateItem)
+
+    return () => clearTimeout(updateItem)
+  }, [activeItem, pauseAnimation])
+
+  const handleAnimation = () =>
+    animationsApi.start((index) => {
+      if (index === activeItem)
+        return { transform: 'translateY(0%)', scale: 1, opacity: 1 }
+      return { transform: 'translateY(100%)', scale: 0.95, opacity: 0 }
+    })
+
+  const handleActiveItem = (index: number) => setActiveItem(index)
+
+  const handleMouseEnter = useCallback(() => setPauseAnimation(true), [])
+
+  const handleMouseLeave = useCallback(() => setPauseAnimation(false), [])
+
   return (
-    <S.Wrapper>
-      <div className="w__image-container">
-        {images.map((image) =>
-          imageTransition(
-            (style, item) =>
-              item && (
-                <animated.img
-                  style={style}
-                  src={image.file}
-                  alt={image.description}
-                />
-              )
-          )
-        )}
-        {/* <img src={images[activeImage].file} className="wic__image" /> */}
+    <S.Wrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div className="items-container">
+        {animations.map((animation, index) => (
+          <animated.a
+            key={items[index].id}
+            style={animation}
+            href={items[index].html_url}
+            target="_blank"
+            className="ic__card"
+            rel="noreferrer"
+          >
+            <FaReact size={80} className="icc__icon" />
+            <div className="icc__content">
+              <h2 className="iccc__name">{items[index].name}</h2>
+              <p className="iccc__description">{items[index].description}</p>
+            </div>
+          </animated.a>
+        ))}
       </div>
-      <div className="w__dots-container">
-        {images.map((item, index) => (
-          <button key={item.description} onClick={() => setActiveImage(index)}>
-            {item.description}
-          </button>
+
+      <div className="dots-container">
+        {dotsTrailAnimation.map((animation, index) => (
+          <animated.button
+            key={items[index].id}
+            style={animation}
+            className={`dc__dot ${
+              index === activeItem ? 'dc__dot--active' : ''
+            }`}
+            onClick={() => handleActiveItem(index)}
+          />
         ))}
       </div>
     </S.Wrapper>

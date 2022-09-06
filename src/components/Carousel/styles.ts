@@ -1,49 +1,121 @@
 import styled, { css } from 'styled-components'
 
-type StyledImageProps = {
-  active?: boolean
-}
-
-const imageModifiers = {
-  active: () => css`
-    opacity: 1;
-    visibility: visible;
-    display: block;
-  `
-}
-
 export const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
+    gap: 2.5rem;
 
     position: relative;
 
-    .w__image-container {
-      display: grid;
-      grid-template-columns: repeat(3, 100%);
-      grid-template-rows: 1fr;
+    height: 100%;
+    overflow: hidden;
+
+    // Configuração para telas mobile & tablets - Tela < 1024px
+    @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
+      height: 50rem !important;
+    }
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
 
       width: 100%;
-      overflow: hidden;
+      height: 4.5rem;
+      background-image: ${`linear-gradient(to top, ${theme.colors.background}, transparent)`};
 
-      .wic__image {
+      z-index: 9;
+    }
+
+    .items-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+
+      height: 100%;
+      width: auto;
+
+      .ic__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        position: absolute;
+
+        text-align: left;
+        height: 100%;
         width: 100%;
+        padding: 5rem;
         border-radius: 2rem;
+        background-color: ${theme.colors.shape};
+        transition: ${`background-color ${theme.transitions.new}`};
+
+        z-index: 0;
+
+        &:hover {
+          background-color: ${theme.colors.primary};
+
+          .icc__content,
+          .iccc__description {
+            color: ${theme.colors.black} !important;
+          }
+        }
+
+        .icc__icon {
+          align-self: flex-end;
+
+          color: ${theme.colors.black};
+        }
+
+        .icc__content {
+          display: flex;
+          flex-direction: column;
+          gap: 2.5rem;
+
+          .iccc__name {
+            font-size: 3rem;
+            font-weight: 700;
+            color: ${theme.colors.black};
+          }
+
+          .iccc__description {
+            color: ${theme.colors.text};
+            transition: ${`color ${theme.transitions.new}`};
+          }
+        }
       }
     }
-  `}
-`
 
-export const Image = styled.img<StyledImageProps>`
-  ${({ theme, active }) => css`
-    /* opacity: 0;
-    visibility: hidden;
-    display: none; */
+    .dots-container {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
 
-    width: 100%;
-    border-radius: 2rem;
+      z-index: 9;
 
-    ${active && imageModifiers.active()}
+      .dc__dot {
+        width: 2rem;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+
+        background-color: ${theme.colors.shape};
+        transition: ${`background-color ${theme.transitions.new}`};
+
+        &:hover:not(.dc__dot--active) {
+          background-color: ${theme.colors.shapeHover};
+        }
+
+        &--active {
+          background-color: ${theme.colors.primary};
+          pointer-events: none;
+        }
+      }
+    }
   `}
 `
