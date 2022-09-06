@@ -12,30 +12,23 @@ export const Page = styled.main`
     padding: 2.5rem 0 14.5rem;
     overflow: hidden;
 
+    // Configuração para telas mobile & tablets - Tela < 1024px
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
       grid-template-columns: 1fr;
 
-      padding: 2.5rem 0;
-
       [class*='title'] {
-        font-size: 5.8rem;
-      }
-
-      [class*='description'] {
-        line-height: normal;
+        font-size: 5.8rem !important;
       }
     }
-  `}
-`
 
-export const Wrapper = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5rem;
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5rem;
 
-    width: 100%;
+      width: 100%;
+    }
 
     .w__title {
       font-size: 7.2rem;
@@ -71,6 +64,7 @@ export const Wrapper = styled.div`
     }
   `}
 `
+
 export const Card = styled.div`
   ${({ theme }) => css`
     display: flex;

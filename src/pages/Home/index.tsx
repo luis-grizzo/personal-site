@@ -1,22 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 
-import { Button } from 'components'
+import { Frame, Button } from 'components'
 
 import { useSpringHorizontalAnimation } from 'shared/animations'
-import { handlePageChange } from 'shared/utils'
 import { socialMedia } from 'shared/constants'
-
-import portrait from 'assets/portrait.png'
+import { handlePageChange } from 'shared/utils'
 
 import * as S from './styles'
 
 const Home = (): React.ReactElement => {
   const navigate = useNavigate()
 
-  const imageAnimation = useSpring({ from: { y: 300 }, to: { y: 0 } })
-
-  const titleAnimation = useSpring({ ...useSpringHorizontalAnimation })
+  const titleAnimation = useSpring(useSpringHorizontalAnimation)
 
   const textAnimation = useSpring({
     ...useSpringHorizontalAnimation,
@@ -28,20 +24,13 @@ const Home = (): React.ReactElement => {
     delay: 200
   })
 
-  const linkedin = socialMedia.find((item) => 'LinkedIn'.includes(item.name))
+  const { linkedin } = socialMedia
 
   return (
-    <>
-      <S.Card>
-        <animated.img
-          style={imageAnimation}
-          src={portrait}
-          alt="Luís Grizzo"
-          className="c__image"
-        />
-      </S.Card>
+    <S.Page>
+      <Frame />
 
-      <S.Wrapper>
+      <div className="wrapper">
         <animated.h1 style={titleAnimation} className="w__title">
           Olá, sou um <br />
           <strong className="wt__highlight">Dev. Front-End</strong> {'&'} <br />
@@ -51,9 +40,9 @@ const Home = (): React.ReactElement => {
         <animated.p style={textAnimation} className="w__description">
           Me chamo{' '}
           <a
-            href={linkedin?.url}
+            href={linkedin.url}
             target="_blank"
-            title={linkedin?.name}
+            title={linkedin.name}
             className="wd__link"
             rel="noreferrer"
           >
@@ -64,8 +53,8 @@ const Home = (): React.ReactElement => {
         </animated.p>
 
         <animated.div style={buttonsAnimation} className="w__button-wrapper">
-          <Button onClick={() => handlePageChange(navigate('/contact'))}>
-            Entre em contato
+          <Button onClick={() => handlePageChange(navigate('/portfolio'))}>
+            Meu portfólio
           </Button>
 
           <Button
@@ -75,8 +64,8 @@ const Home = (): React.ReactElement => {
             Sobre mim
           </Button>
         </animated.div>
-      </S.Wrapper>
-    </>
+      </div>
+    </S.Page>
   )
 }
 
