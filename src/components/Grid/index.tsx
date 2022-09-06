@@ -27,9 +27,7 @@ export const Grid = ({ items }: GridProps): React.ReactElement => {
 
   const trail = useTrail(
     items.length,
-    isDesktop
-      ? { ...useTrailVerticalAnimation }
-      : { ...useTrailHorizontalAnimation }
+    isDesktop ? useTrailVerticalAnimation : useTrailHorizontalAnimation
   )
 
   useCallback(() => {
@@ -51,7 +49,7 @@ export const Grid = ({ items }: GridProps): React.ReactElement => {
           rel="noreferrer"
         >
           {cloneElement(items[index].icon, {
-            size: 50,
+            size: 60,
             className: 'gi__icon'
           })}
         </animated.a>

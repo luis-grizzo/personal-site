@@ -7,13 +7,17 @@ export const Grid = styled.div`
     grid-auto-rows: 1fr;
     gap: 2.5rem;
 
-    width: fit-content;
-    margin: 0 auto;
+    width: 100%;
 
+    // Configuração para telas mobile & tablets - Tela < 1024px
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
       grid-template-columns: repeat(6, auto);
       overflow-y: hidden;
       width: 100%;
+
+      .g__item {
+        width: 15rem !important;
+      }
     }
 
     .g__item {
@@ -21,15 +25,15 @@ export const Grid = styled.div`
       align-items: center;
       justify-content: center;
 
-      width: 15rem;
+      width: 100%;
       aspect-ratio: 1/1;
+      border-radius: 2rem;
       color: ${theme.colors.black};
       background-color: ${theme.colors.shape};
-      border-radius: 2rem;
       cursor: pointer;
 
       will-change: background-color;
-      transition: background-color 300ms ease;
+      transition: ${`background-color ${theme.transitions.new}`};
 
       &:hover {
         background-color: ${theme.colors.primary};
