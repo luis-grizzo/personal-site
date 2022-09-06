@@ -1,27 +1,25 @@
 import { useNavigate } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 
-import { Button, TextRender, TextProps } from 'components'
+import { Frame, TextRender, TextProps, Button } from 'components'
 
 import { useSpringHorizontalAnimation } from 'shared/animations'
-import { handlePageChange } from 'shared/utils'
 import { socialMedia } from 'shared/constants'
+import { handlePageChange } from 'shared/utils'
 
 import * as S from './styles'
 
 const About = (): React.ReactElement => {
   const navigate = useNavigate()
 
-  const titleAnimation = useSpring({ ...useSpringHorizontalAnimation })
+  const titleAnimation = useSpring(useSpringHorizontalAnimation)
 
   const buttonsAnimation = useSpring({
     ...useSpringHorizontalAnimation,
     delay: 100
   })
 
-  const linkedin = socialMedia.find((item) => 'LinkedIn'.includes(item.name))
-
-  const github = socialMedia.find((item) => 'Github'.includes(item.name))
+  const { linkedin, github } = socialMedia
 
   const texts: TextProps[] = [
     {
@@ -30,8 +28,8 @@ const About = (): React.ReactElement => {
         <>
           Olá! eu sou{' '}
           <a
-            href={linkedin?.url}
-            title={linkedin?.name}
+            href={linkedin.url}
+            title={linkedin.name}
             target="_blank"
             className="wt__highlight"
             rel="noreferrer"
@@ -62,14 +60,14 @@ const About = (): React.ReactElement => {
           Para ver meus projetos já desenvolvidos, te convido a acessar meu
           perfil no{' '}
           <a
-            href={github?.url}
-            title={github?.name}
+            href={github.url}
+            title={github.name}
             target="_blank"
             className="wt__highlight"
             rel="noreferrer"
           >
             Github
-          </a>{' '}
+          </a>
           , uma plataforma de versionamento de código e comunidade de
           programadores.
         </>
@@ -78,30 +76,32 @@ const About = (): React.ReactElement => {
   ]
 
   return (
-    <>
-      <span>aside</span>
+    <S.Page>
+      <Frame />
 
-      <S.Wrapper>
+      <div className="wrapper">
         <animated.h1 style={titleAnimation} className="w__title">
           <strong className="wt__highlight">Sobre</strong> Mim
         </animated.h1>
 
         <TextRender texts={texts} />
 
-        {/* <animated.div style={buttonsAnimation} className="w__button-wrapper">
-          <Button onClick={() => handlePageChange(navigate('/contact'))}>
-            Contato
+        <animated.div style={buttonsAnimation} className="w__buttons-wrapper">
+          <Button
+            variant="primary"
+            onClick={() => handlePageChange(navigate('/portfolio'))}
+          >
+            Meu portfólio
           </Button>
-
           <Button
             variant="secondary"
-            onClick={() => handlePageChange(navigate('/'))}
+            onClick={() => handlePageChange(navigate('/contact'))}
           >
-            Voltar para home
+            Entre em contato
           </Button>
-        </animated.div> */}
-      </S.Wrapper>
-    </>
+        </animated.div>
+      </div>
+    </S.Page>
   )
 }
 
