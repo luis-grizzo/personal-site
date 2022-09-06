@@ -1,5 +1,6 @@
 export * from './Button'
 export * from './Carousel'
+export * from './Frame'
 export * from './Grid'
 export * from './Loading'
 export * from './Logo'
