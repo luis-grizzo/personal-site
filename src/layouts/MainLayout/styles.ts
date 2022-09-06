@@ -34,21 +34,6 @@ export const Wrapper = styled.div`
         width: 100%;
 
         .wnlw__link {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          color: ${theme.colors.black};
-
-          will-change: color;
-          transition: ${`color ${theme.transitions.new}`};
-
-          &:hover {
-            color: ${theme.colors.blackHover};
-          }
-        }
-
-        .wnlw__link {
           font-weight: 400;
           color: ${theme.colors.text};
           text-transform: uppercase;
@@ -66,31 +51,6 @@ export const Wrapper = styled.div`
             font-weight: 700;
             cursor: default;
             pointer-events: none;
-          }
-        }
-
-        .wnlw__divider {
-          width: 0.2rem;
-          height: 3rem;
-          background-color: ${theme.colors.black};
-        }
-
-        .wnlw__menu-button {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          background-color: transparent;
-          border: none;
-          color: ${theme.colors.black};
-          cursor: pointer;
-          padding: 0;
-
-          will-change: color;
-          transition: ${`color ${theme.transitions.new}`};
-
-          &:hover {
-            color: ${theme.colors.blackHover};
           }
         }
       }
