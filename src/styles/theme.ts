@@ -26,7 +26,9 @@ export const theme = {
 
     text: '#616161',
     textHover: transparentize(0.3, '#616161'),
+
     shape: '#e6e6e6',
+    shapeLight: transparentize(0.3, '#e6e6e6'),
     shapeHover: darken(0.3, '#e6e6e6'),
     background: '#fafafa'
   },
