@@ -1,6 +1,6 @@
 import * as S from './styles'
 
-export type ButtonVariants = 'primary' | 'secondary'
+export type ButtonVariants = 'primary' | 'secondary' | 'ghost'
 
 export type ButtonProps = {
   variant?: ButtonVariants
