@@ -3,12 +3,12 @@ import { UseSpringProps } from 'react-spring'
 export const useSpringHorizontalAnimation: UseSpringProps = {
   from: {
     opacity: 0,
-    x: 100,
+    transform: 'translateX(100px)',
     scale: 0.95
   },
   to: {
     opacity: 1,
-    x: 0,
+    transform: 'translateX(0)',
     scale: 1
   }
 }
@@ -16,12 +16,12 @@ export const useSpringHorizontalAnimation: UseSpringProps = {
 export const useSpringVerticalAnimation: UseSpringProps = {
   from: {
     opacity: 0,
-    y: 100,
+    transform: 'translateY(100px)',
     scale: 0.95
   },
   to: {
     opacity: 1,
-    y: 0,
+    transform: 'translateY(0)',
     scale: 1
   }
 }

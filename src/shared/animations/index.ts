@@ -1,2 +1,2 @@
-export * from './useSpingBaseAnimations'
+export * from './useSpringBaseAnimations'
 export * from './useTrailBaseAnimations'
