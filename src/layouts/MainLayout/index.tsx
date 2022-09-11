@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Helmet from 'react-helmet'
 import { Link, NavLink } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 import { MdMenu } from 'react-icons/md'
@@ -41,6 +42,10 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
 
   return (
     <S.Wrapper>
+      <Helmet>
+        <meta name="theme-color" content={theme.colors.primary} />
+      </Helmet>
+
       <animated.nav style={navbarAnimation} className="w__navbar">
         <Link to="/">
           <Logo />
@@ -52,6 +57,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
               <NavLink
                 key={item.id}
                 to={item.path}
+                title={`ir para ${item.description.toLowerCase()}`}
                 className={({ isActive }) =>
                   `wnlw__link ${isActive ? 'wnlw__link--active' : ''}`
                 }

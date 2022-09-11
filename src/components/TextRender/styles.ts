@@ -16,8 +16,9 @@ const textFadeModifiers = {
 }
 
 export const Wrapper = styled.div`
-  position: relative;
   display: flex;
+
+  position: relative;
 
   height: 100%;
   overflow: hidden;
