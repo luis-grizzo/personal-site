@@ -9,7 +9,8 @@ const modifiers = {
     background-color: ${theme.colors.black};
     color: ${theme.colors.white};
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: ${theme.colors.blackHover};
     }
   `,
@@ -18,16 +19,18 @@ const modifiers = {
     color: ${theme.colors.black};
     border-color: ${theme.colors.black};
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: ${theme.colors.blackHover};
       border-color: ${theme.colors.blackHover};
     }
   `,
   ghost: (theme: DefaultTheme) => css`
-    background-color: ${theme.colors.shapeLight};
+    background-color: transparent;
     color: ${theme.colors.black};
 
-    &:hover {
+    &:hover,
+    &focus {
       background-color: ${theme.colors.shape};
     }
   `
