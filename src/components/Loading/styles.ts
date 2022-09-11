@@ -1,5 +1,14 @@
 import styled, { css, keyframes } from 'styled-components'
 
+import { LoadingProps } from '.'
+
+const wrapperModifiers = {
+  isChildren: () => css`
+    width: 100% !important;
+    height: 100% !important;
+  `
+}
+
 const rotateHue = keyframes`
   0% {
     filter: hue-rotate(0deg);
@@ -10,33 +19,61 @@ const rotateHue = keyframes`
   }
 `
 
-export const Wrapper = styled.div`
-  ${({ theme }) => css`
-    position: relative;
+const indeterminateAnimation = keyframes`
+  0% {
+    transform:  translateX(0) scaleX(0);
+  }
+  40% {
+    transform:  translateX(0) scaleX(0.4);
+  }
+  100% {
+    transform:  translateX(100%) scaleX(0.5);
+  }
+`
 
+export const Wrapper = styled.div<LoadingProps>`
+  ${({ theme, isChildren }) => css`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
 
     width: 100vw;
     height: 100vh;
 
-    animation: 1000ms ${rotateHue} linear infinite;
+    animation: 2000ms ${rotateHue} linear infinite;
 
-    &::after {
-      content: '';
+    ${isChildren && wrapperModifiers.isChildren()}
 
-      position: absolute;
-      z-index: -1;
+    .w__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
 
-      width: 10rem;
-      height: 10rem;
+      .wc__logo {
+        height: 10rem;
+        width: 6.7rem;
+      }
 
-      border-radius: 50%;
-      background-color: ${theme.colors.white};
-      border: 5px solid ${theme.colors.primary};
+      .wc__progress-bar {
+        width: 100%;
+        height: 0.8rem;
+        overflow: hidden;
+        background-color: ${theme.colors.primaryHover};
+        border-radius: 2rem;
+
+        .wcpb__bar {
+          width: 100%;
+          height: 100%;
+          background-color: ${theme.colors.primary};
+          border-radius: 2rem;
+
+          animation: ${indeterminateAnimation} 1000ms infinite linear;
+          transform-origin: 0% 50%;
+        }
+      }
     }
   `}
 `
