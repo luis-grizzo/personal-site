@@ -1,4 +1,10 @@
-import { useState, useCallback, cloneElement } from 'react'
+import {
+  useRef,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  cloneElement
+} from 'react'
 import { useTrail, animated } from 'react-spring'
 
 import {
@@ -21,6 +27,10 @@ export type ItemProps = {
 }
 
 export const Grid = ({ items }: GridProps): React.ReactElement => {
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  const [isFullLeftScroll, setIsFullLeftScroll] = useState(false)
+  const [isFullRightScroll, setIsFullRightScroll] = useState(false)
   const [isDesktop, setIsDesktop] = useState(
     !!(window.innerWidth > theme.mediaquerys.laptopStart)
   )
@@ -30,30 +40,58 @@ export const Grid = ({ items }: GridProps): React.ReactElement => {
     isDesktop ? useTrailVerticalAnimation : useTrailHorizontalAnimation
   )
 
-  useCallback(() => {
-    window.addEventListener('resize', () => {
-      setIsDesktop(!!(window.innerWidth > theme.mediaquerys.laptopStart))
-    })
+  const handleScroll = (): void => {
+    const offsetWidth = gridRef.current?.offsetWidth ?? 0
+    const scrollLeft = gridRef.current?.scrollLeft ?? 0
+    const scrollWidth = gridRef.current?.scrollWidth ?? 0
+
+    scrollLeft === 0 ? setIsFullLeftScroll(true) : setIsFullLeftScroll(false)
+
+    offsetWidth + scrollLeft >= scrollWidth
+      ? setIsFullRightScroll(true)
+      : setIsFullRightScroll(false)
+  }
+
+  const handleResize = (): void =>
+    setIsDesktop(!!(window.innerWidth > theme.mediaquerys.laptopStart))
+
+  useLayoutEffect(() => {
+    handleScroll()
+
+    gridRef.current?.addEventListener('scroll', handleScroll)
+
+    return () => gridRef.current?.removeEventListener('scroll', handleScroll)
+  })
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
   }, [window.innerWidth])
 
   return (
-    <S.Grid>
-      {trail.map((animation, index) => (
-        <animated.a
-          key={items[index].name}
-          href={items[index].url}
-          title={items[index].name}
-          style={animation}
-          target="_blank"
-          className="g__item"
-          rel="noreferrer"
-        >
-          {cloneElement(items[index].icon, {
-            size: 60,
-            className: 'gi__icon'
-          })}
-        </animated.a>
-      ))}
-    </S.Grid>
+    <S.Wrapper>
+      <S.Grid ref={gridRef}>
+        {trail.map((animation, index) => (
+          <animated.a
+            key={items[index].name}
+            href={items[index].url}
+            title={items[index].name}
+            style={animation}
+            target="_blank"
+            className="g__item"
+            rel="noreferrer"
+          >
+            {cloneElement(items[index].icon, {
+              size: isDesktop ? 60 : 50,
+              className: 'gi__icon'
+            })}
+          </animated.a>
+        ))}
+      </S.Grid>
+
+      {!isDesktop && <S.FadeLeft isFullLeftScroll={isFullLeftScroll} />}
+      {!isDesktop && <S.FadeRight isFullRightScroll={isFullRightScroll} />}
+    </S.Wrapper>
   )
 }
