@@ -48,7 +48,7 @@ const Home = (): React.ReactElement => {
           >
             Luís Grizzo
           </a>{' '}
-          e este é meu site! conheça um pouco sobre meu trabalho, veja meus
+          e este é meu site! Conheça um pouco sobre meu trabalho, veja meus
           projetos e encontre meus links para contato! Obrigado pela visita!
         </animated.p>
 
