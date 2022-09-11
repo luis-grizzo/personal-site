@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSpring, useTrail, animated } from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 
-import { Carousel, Button } from 'components'
+import { Carousel, Button, Loading } from 'components'
 
 import { fetchRepos, FetchReposProps } from 'services'
 
-import {
-  useSpringHorizontalAnimation,
-  useTrailVerticalAnimation
-} from 'shared/animations'
+import { useSpringHorizontalAnimation } from 'shared/animations'
 import { socialMedia } from 'shared/constants'
 import { handlePageChange } from 'shared/utils'
 
@@ -19,10 +16,15 @@ const Portfolio = (): React.ReactElement => {
   const navigate = useNavigate()
 
   const [data, setData] = useState<FetchReposProps[]>([])
+  const [loading, setLoading] = useState(data.length === 0)
 
   useEffect(() => {
     fetchRepos().then((data) => setData(data))
   }, [])
+
+  useEffect(() => {
+    data.length > 0 && setLoading(false)
+  }, [data])
 
   const titleAnimation = useSpring(useSpringHorizontalAnimation)
 
@@ -30,8 +32,6 @@ const Portfolio = (): React.ReactElement => {
     ...useSpringHorizontalAnimation,
     delay: 100
   })
-
-  // const projectsTrail = useTrail(data.length, useTrailVerticalAnimation)
 
   const buttonsAnimation = useSpring({
     ...useSpringHorizontalAnimation,
@@ -42,7 +42,7 @@ const Portfolio = (): React.ReactElement => {
 
   return (
     <S.Page>
-      <Carousel items={data} />
+      {loading ? <Loading isChildren /> : <Carousel items={data} />}
 
       <div className="content">
         <animated.h1 style={titleAnimation} className="c__title">
@@ -54,6 +54,7 @@ const Portfolio = (): React.ReactElement => {
           <a
             className="cd__link"
             href={github.url}
+            title={github.name}
             target="_blank"
             rel="noreferrer"
           >
@@ -77,21 +78,6 @@ const Portfolio = (): React.ReactElement => {
           </Button>
         </animated.div>
       </div>
-
-      {/* <div className="grid custom-scroll">
-        {projectsTrail.map((animation, index) => (
-          <animated.a
-            key={data[index].id}
-            style={animation}
-            href={data[index].html_url}
-            target="_blank"
-            className="g__card"
-          >
-            <h2 className="gc__name">{data[index].name}</h2>
-            <p className="gc__description">{data[index].description}</p>
-          </animated.a>
-        ))}
-      </div> */}
     </S.Page>
   )
 }
