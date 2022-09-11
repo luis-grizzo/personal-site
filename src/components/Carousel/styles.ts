@@ -3,31 +3,37 @@ import styled, { css } from 'styled-components'
 export const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
     gap: 2.5rem;
 
     position: relative;
 
     height: 100%;
-    overflow: hidden;
 
     // Configuração para telas mobile & tablets - Tela < 1024px
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
-      height: 50rem !important;
-    }
+      flex-direction: column;
 
-    &:before {
-      content: '';
+      height: 55rem !important;
+      overflow: hidden;
 
-      position: absolute;
-      bottom: 0;
-      left: 0;
+      &:before {
+        content: '';
 
-      width: 100%;
-      height: 4.5rem;
-      background-image: ${`linear-gradient(to top, ${theme.colors.background}, transparent)`};
+        position: absolute;
+        bottom: 0;
+        left: 0;
 
-      z-index: 9;
+        width: 100%;
+        height: 4.5rem;
+        background-image: ${`linear-gradient(to top, ${theme.colors.background}, transparent)`};
+
+        z-index: 9;
+      }
+
+      .dots-container {
+        flex-direction: row !important;
+      }
     }
 
     .items-container {
@@ -38,7 +44,7 @@ export const Wrapper = styled.div`
       position: relative;
 
       height: 100%;
-      width: auto;
+      width: 100%;
 
       .ic__card {
         display: flex;
@@ -58,7 +64,8 @@ export const Wrapper = styled.div`
 
         z-index: 0;
 
-        &:hover {
+        &:hover,
+        &:focus {
           background-color: ${theme.colors.primary};
 
           .icc__content,
@@ -94,6 +101,7 @@ export const Wrapper = styled.div`
 
     .dots-container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       gap: 2.5rem;
 

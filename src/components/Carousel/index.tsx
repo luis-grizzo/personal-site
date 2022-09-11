@@ -1,4 +1,10 @@
-import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
+import {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+  useRef
+} from 'react'
 import { useSprings, animated, useTrail } from 'react-spring'
 import { FaReact } from 'react-icons/fa'
 
@@ -13,6 +19,8 @@ type CarouselProps = {
 }
 
 export const Carousel = ({ items }: CarouselProps): React.ReactElement => {
+  const cardRef = useRef<HTMLAnchorElement>(null)
+
   const [activeItem, setActiveItem] = useState(0)
   const [pauseAnimation, setPauseAnimation] = useState(false)
 
@@ -52,21 +60,32 @@ export const Carousel = ({ items }: CarouselProps): React.ReactElement => {
 
   const handleActiveItem = (index: number) => setActiveItem(index)
 
-  const handleMouseEnter = useCallback(() => setPauseAnimation(true), [])
+  const handlePauseAnimation = useCallback(() => setPauseAnimation(true), [])
 
-  const handleMouseLeave = useCallback(() => setPauseAnimation(false), [])
+  const handlePlayAnimation = useCallback(() => setPauseAnimation(false), [])
+
+  const handleTouchStart = useCallback(() => cardRef.current?.focus(), [])
 
   return (
-    <S.Wrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <S.Wrapper
+      onMouseEnter={handlePauseAnimation}
+      onMouseLeave={handlePlayAnimation}
+    >
       <div className="items-container">
         {animations.map((animation, index) => (
           <animated.a
+            ref={activeItem === index ? cardRef : null}
             key={items[index].id}
             style={animation}
             href={items[index].html_url}
+            title={`Acessar o repositório ${items[index].name}`}
             target="_blank"
             className="ic__card"
             rel="noreferrer"
+            onTouchStart={handleTouchStart}
+            onFocus={handlePauseAnimation}
+            onBlur={handlePlayAnimation}
+            tabIndex={activeItem === index ? 1 : -1}
           >
             <FaReact size={80} className="icc__icon" />
             <div className="icc__content">
