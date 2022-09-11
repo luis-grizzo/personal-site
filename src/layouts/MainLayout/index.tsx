@@ -57,7 +57,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
               <NavLink
                 key={item.id}
                 to={item.path}
-                title={`ir para ${item.description.toLowerCase()}`}
+                title={`ir para ${item.description}`}
                 className={({ isActive }) =>
                   `wnlw__link ${isActive ? 'wnlw__link--active' : ''}`
                 }
