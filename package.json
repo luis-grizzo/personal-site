@@ -2,6 +2,7 @@
   "name": "personal-site",
   "version": "0.2.0",
   "private": true,
+  "homepage": "https://luis-grizzo.github.io/personal-site/",
   "dependencies": {
     "polished": "^4.1.4",
     "react": "^17.0.2",
