@@ -12,7 +12,7 @@ import { handlePageChange } from 'shared/utils'
 
 import * as S from './styles'
 
-const Portfolio = (): React.ReactElement => {
+export const Portfolio = (): React.ReactElement => {
   const navigate = useNavigate()
 
   const [data, setData] = useState<FetchReposProps[]>([])
@@ -81,5 +81,3 @@ const Portfolio = (): React.ReactElement => {
     </S.Page>
   )
 }
-
-export default Portfolio

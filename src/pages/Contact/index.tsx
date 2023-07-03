@@ -1,60 +1,134 @@
-import { useNavigate } from 'react-router-dom'
-import { useSpring, animated } from 'react-spring'
+import { useState, useEffect } from 'react'
+import { useTransition, animated } from 'react-spring'
 
 import { Button, Grid, ItemProps } from 'components'
 
-import { useSpringHorizontalAnimation } from 'shared/animations'
+import { useTransitionHorizontalAnimation } from 'shared/animations'
 import { socialMedia } from 'shared/constants'
 import { convertObjectToArray, handlePageChange } from 'shared/utils'
 
+import { Pages } from 'layouts/MainLayout'
+
 import * as S from './styles'
 
-const Contact = (): React.ReactElement => {
-  const navigate = useNavigate()
+interface ContactProps {
+  isActive: boolean
+  requestChangePage: (newPage: Pages) => void
+  onUnmount: () => void
+}
 
-  const titleAnimation = useSpring(useSpringHorizontalAnimation)
+interface ComponentStatusProps {
+  component: 'title' | 'text' | 'buttons'
+  isUnmounted: boolean
+}
 
-  const textAnimation = useSpring({
-    ...useSpringHorizontalAnimation,
-    delay: 100
+export const Contact = ({
+  isActive,
+  requestChangePage,
+  onUnmount
+}: ContactProps): React.ReactElement => {
+  const [componentsStatus, setComponentsStatus] = useState<
+    ComponentStatusProps[]
+  >([
+    {
+      component: 'title',
+      isUnmounted: false
+    },
+    {
+      component: 'text',
+      isUnmounted: false
+    },
+    {
+      component: 'buttons',
+      isUnmounted: false
+    }
+  ])
+
+  const titleTransition = useTransition(isActive, {
+    ...useTransitionHorizontalAnimation,
+    reverse: isActive,
+    onDestroyed: (isUnmounted) =>
+      setComponentsStatus((prevState) => [
+        ...prevState,
+        { component: 'title', isUnmounted }
+      ])
   })
 
-  const buttonsAnimation = useSpring({
-    ...useSpringHorizontalAnimation,
-    delay: 200
+  const textTransition = useTransition(isActive, {
+    ...useTransitionHorizontalAnimation,
+    delay: 100,
+    reverse: isActive,
+    onDestroyed: (isUnmounted) =>
+      setComponentsStatus((prevState) => [
+        ...prevState,
+        { component: 'text', isUnmounted }
+      ])
+  })
+
+  const buttonsTransition = useTransition(isActive, {
+    ...useTransitionHorizontalAnimation,
+    delay: 200,
+    reverse: isActive,
+    onDestroyed: (isUnmounted) =>
+      setComponentsStatus((prevState) => [
+        ...prevState,
+        { component: 'buttons', isUnmounted }
+      ])
   })
 
   const gridItems = convertObjectToArray<ItemProps>(socialMedia)
+
+  useEffect(() => {
+    componentsStatus.every(({ isUnmounted }) => isUnmounted === true) &&
+      onUnmount()
+  }, [componentsStatus])
 
   return (
     <S.Page>
       <Grid items={gridItems} />
 
       <div className="wrapper">
-        <animated.h1 style={titleAnimation} className="w__title">
-          <strong className="wt__highlight">Redes</strong> sociais
-        </animated.h1>
+        {titleTransition(
+          (style, item) =>
+            item && (
+              <animated.h1 style={style} className="w__title">
+                <strong className="wt__highlight">Redes</strong> sociais
+              </animated.h1>
+            )
+        )}
 
-        <animated.p style={textAnimation} className="w__description">
-          Aqui você encontra todas as minhas redes sociais e formas de contato,
-          será ótimo conversar com você!
-        </animated.p>
+        {textTransition(
+          (style, item) =>
+            item && (
+              <animated.p style={style} className="w__description">
+                Aqui você encontra todas as minhas redes sociais e formas de
+                contato, será ótimo conversar com você!
+              </animated.p>
+            )
+        )}
 
-        <animated.div style={buttonsAnimation} className="w__button-wrapper">
-          <Button onClick={() => handlePageChange(navigate('/portfolio'))}>
-            Meu portfólio
-          </Button>
+        {buttonsTransition(
+          (style, item) =>
+            item && (
+              <animated.div style={style} className="w__button-wrapper">
+                <Button
+                  onClick={() =>
+                    handlePageChange(requestChangePage('portfolio'))
+                  }
+                >
+                  Meu portfólio
+                </Button>
 
-          <Button
-            variant="secondary"
-            onClick={() => handlePageChange(navigate('/about'))}
-          >
-            Sobre mim
-          </Button>
-        </animated.div>
+                <Button
+                  variant="secondary"
+                  onClick={() => handlePageChange(requestChangePage('home'))}
+                >
+                  Sobre mim
+                </Button>
+              </animated.div>
+            )
+        )}
       </div>
     </S.Page>
   )
 }
-
-export default Contact

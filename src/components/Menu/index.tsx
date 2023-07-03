@@ -35,6 +35,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     reverse: isOpen
+    // onDestroyed: (isUnmounted) => console.log({ isUnmounted })
   })
 
   return wrapperTransition(
