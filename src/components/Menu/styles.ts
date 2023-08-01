@@ -46,7 +46,7 @@ export const Wrapper = styled.div<StyledWrapperProps>`
         cursor: pointer;
 
         will-change: color;
-        transition: ${`color ${theme.transitions.new}`};
+        transition: ${`color ${theme.transitions.default}`};
 
         &:hover:not(.wc__item--active) {
           color: ${theme.colors.textHover};

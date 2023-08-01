@@ -67,7 +67,7 @@ export const Page = styled.main`
         cursor: pointer;
 
         will-change: background-color;
-        transition: ${theme.transitions.default};
+        transition: ${`background-color ${theme.transitions.default}`};
 
         &:hover {
           background-color: ${theme.colors.primary};

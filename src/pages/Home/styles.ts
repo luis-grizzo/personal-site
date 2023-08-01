@@ -48,7 +48,7 @@ export const Page = styled.main`
         color: ${theme.colors.primary};
 
         will-change: color;
-        transition: ${`color ${theme.transitions.new}`};
+        transition: ${`color ${theme.transitions.default}`};
 
         &:hover {
           color: ${theme.colors.primaryHover};

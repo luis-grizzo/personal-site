@@ -39,7 +39,7 @@ export const FadeLeft = styled.div<StyledFadeLeft>`
     height: 100%;
     width: 15%;
     background-image: ${`linear-gradient(to right, ${theme.colors.background}, transparent)`};
-    transition: ${`opacity ${theme.transitions.new}, visibility ${theme.transitions.new}`};
+    transition: ${`opacity ${theme.transitions.default}, visibility ${theme.transitions.default}`};
 
     ${isFullLeftScroll && fadeModifiers.desactive()}
   `}
@@ -54,7 +54,7 @@ export const FadeRight = styled.div<StyledFadeRight>`
     height: 100%;
     width: 15%;
     background-image: ${`linear-gradient(to left, ${theme.colors.background}, transparent)`};
-    transition: ${`opacity ${theme.transitions.new}, visibility ${theme.transitions.new}`};
+    transition: ${`opacity ${theme.transitions.default}, visibility ${theme.transitions.default}`};
 
     ${isFullRightScroll && fadeModifiers.desactive()}
   `}
@@ -95,7 +95,7 @@ export const Grid = styled.div`
       cursor: pointer;
 
       will-change: background-color;
-      transition: ${`background-color ${theme.transitions.new}`};
+      transition: ${`background-color ${theme.transitions.default}`};
 
       &:hover {
         background-color: ${theme.colors.primary};

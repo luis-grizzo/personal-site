@@ -60,7 +60,7 @@ export const Wrapper = styled.div`
         padding: 5rem;
         border-radius: 2rem;
         background-color: ${theme.colors.shape};
-        transition: ${`background-color ${theme.transitions.new}`};
+        transition: ${`background-color ${theme.transitions.default}`};
 
         z-index: 0;
 
@@ -93,7 +93,7 @@ export const Wrapper = styled.div`
 
           .iccc__description {
             color: ${theme.colors.text};
-            transition: ${`color ${theme.transitions.new}`};
+            transition: ${`color ${theme.transitions.default}`};
           }
         }
       }
@@ -113,7 +113,7 @@ export const Wrapper = styled.div`
         border-radius: 50%;
 
         background-color: ${theme.colors.shape};
-        transition: ${`background-color ${theme.transitions.new}`};
+        transition: ${`background-color ${theme.transitions.default}`};
 
         &:hover:not(.dc__dot--active) {
           background-color: ${theme.colors.shapeHover};

@@ -33,7 +33,7 @@ export const TextFadeTop = styled.div<StyledTextFadeTop>`
     height: 25%;
     width: calc(100% - 1.6rem);
     background-image: ${`linear-gradient(to bottom, ${theme.colors.background}, transparent)`};
-    transition: ${`opacity ${theme.transitions.new}, visibility ${theme.transitions.new}`};
+    transition: ${`opacity ${theme.transitions.default}, visibility ${theme.transitions.default}`};
 
     ${isTopScroll && textFadeModifiers.desactive()}
   `}
@@ -48,7 +48,7 @@ export const TextFadeBottom = styled.div<StyledTextFadeBottom>`
     height: 25%;
     width: calc(100% - 1.6rem);
     background-image: ${`linear-gradient(to top, ${theme.colors.background}, transparent)`};
-    transition: ${`opacity ${theme.transitions.new}, visibility ${theme.transitions.new}`};
+    transition: ${`opacity ${theme.transitions.default}, visibility ${theme.transitions.default}`};
 
     ${isFullScrolled && textFadeModifiers.desactive()}
   `}
@@ -71,7 +71,7 @@ export const TextContainer = styled.div`
       .wt__highlight {
         font-weight: bold;
         color: ${theme.colors.primary};
-        transition: ${`color ${theme.transitions.new}`};
+        transition: ${`color ${theme.transitions.default}`};
 
         &:hover {
           color: ${theme.colors.primaryHover};

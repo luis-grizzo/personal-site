@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
           cursor: pointer;
 
           will-change: color;
-          transition: ${`color ${theme.transitions.new}`};
+          transition: ${`color ${theme.transitions.default}`};
 
           &:hover:not(.wnlw__link--active) {
             color: ${theme.colors.textHover};

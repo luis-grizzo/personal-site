@@ -33,8 +33,7 @@ export const theme = {
     background: '#fafafa'
   },
   transitions: {
-    default: 'all 300ms ease',
-    new: '300ms ease'
+    default: '300ms ease'
   },
   mediaquerys: {
     laptopStart: 1024,

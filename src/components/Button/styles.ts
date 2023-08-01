@@ -53,7 +53,7 @@ export const Wrapper = styled.button<StyledButtonProps>`
     padding: 1.2rem 2rem;
     cursor: pointer;
 
-    transition: ${`all ${theme.transitions.new}`};
+    transition: ${`all ${theme.transitions.default}`};
 
     ${variant && modifiers[variant](theme)}
   `}
