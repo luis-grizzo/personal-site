@@ -1,34 +1,52 @@
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 
 import { Frame, Button } from 'components'
 
 import { useSpringHorizontalAnimation } from 'shared/animations'
 import { socialMedia } from 'shared/constants'
-import { handlePageChange } from 'shared/utils'
+import { useWatcher } from 'shared/hooks/watcher'
 
 import * as S from './styles'
 
 const Home = (): React.ReactElement => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const { nextPath, setNextPath } = useWatcher()
 
-  const titleAnimation = useSpring(useSpringHorizontalAnimation)
+  const [mountPage, setMountPage] = useState(true)
+
+  const { linkedin } = socialMedia
+
+  const handleUnmountedPage = (finished: boolean | undefined) =>
+    finished && nextPath && navigate(nextPath)
+
+  const titleAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    reverse: !mountPage
+  })
 
   const textAnimation = useSpring({
     ...useSpringHorizontalAnimation,
-    delay: 100
+    delay: 100,
+    reverse: !mountPage
   })
 
   const buttonsAnimation = useSpring({
     ...useSpringHorizontalAnimation,
-    delay: 200
+    delay: 200,
+    reverse: !mountPage,
+    onRest: ({ finished }) => handleUnmountedPage(finished)
   })
 
-  const { linkedin } = socialMedia
+  useEffect(() => {
+    nextPath && nextPath !== pathname && setMountPage(false)
+  }, [nextPath])
 
   return (
     <S.Page>
-      <Frame />
+      <Frame mountComponent={mountPage} />
 
       <div className="wrapper">
         <animated.h1 style={titleAnimation} className="w__title">
@@ -53,15 +71,12 @@ const Home = (): React.ReactElement => {
         </animated.p>
 
         <animated.div style={buttonsAnimation} className="w__button-wrapper">
-          <Button onClick={() => handlePageChange(navigate('/portfolio'))}>
+          <Button onClick={() => setNextPath('/portfolio')}>
             Meu portfólio
           </Button>
 
-          <Button
-            variant="secondary"
-            onClick={() => handlePageChange(navigate('/about'))}
-          >
-            Sobre mim
+          <Button variant="secondary" onClick={() => setNextPath('/contact')}>
+            Contato
           </Button>
         </animated.div>
       </div>

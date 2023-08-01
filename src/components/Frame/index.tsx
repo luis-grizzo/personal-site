@@ -1,7 +1,11 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useSpring, useSprings, animated } from 'react-spring'
 
-import { useSpringVerticalAnimation } from 'shared/animations'
+import { useResize } from 'shared/hooks/resize'
+import {
+  useSpringVerticalAnimation,
+  useSpringHorizontalAnimation
+} from 'shared/animations'
 
 import retrato1 from 'assets/retrato1.png'
 import retrato3 from 'assets/retrato3.png'
@@ -17,15 +21,28 @@ const images = [
   { id: 2, file: retrato4 }
 ]
 
-export const Frame = (): React.ReactElement => {
+interface FrameProps {
+  mountComponent: boolean
+}
+
+export const Frame = ({ mountComponent }: FrameProps): React.ReactElement => {
+  const { isDesktop } = useResize()
+
   const [activeImage, setActiveImage] = useState(0)
 
   const [animations, animationsApi] = useSprings(images.length, () => ({
     transform: 'translateY(100%)'
   }))
 
+  const springBaseAnimation = isDesktop
+    ? useSpringVerticalAnimation
+    : useSpringHorizontalAnimation
+
   const AnimatedCard = animated(S.Card)
-  const cardAnimation = useSpring(useSpringVerticalAnimation)
+  const cardAnimation = useSpring({
+    ...springBaseAnimation,
+    reverse: !mountComponent
+  })
 
   useLayoutEffect(() => {
     handleAnimation()

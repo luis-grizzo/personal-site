@@ -1,27 +1,35 @@
-import { UseTrailProps } from 'react-spring'
-
-export const useTrailVerticalAnimation: UseTrailProps = {
-  from: {
-    opacity: 0,
-    transform: 'translateY(100px)',
-    scale: 0.95
-  },
-  to: {
-    opacity: 1,
-    transform: 'translateY(0)',
-    scale: 1
-  }
-}
+import { UseTrailProps, easings } from 'react-spring'
 
 export const useTrailHorizontalAnimation: UseTrailProps = {
   from: {
     opacity: 0,
-    transform: 'translateX(100px)',
+    x: 100,
     scale: 0.95
   },
   to: {
     opacity: 1,
-    transform: 'translateX(0)',
+    x: 0,
     scale: 1
+  },
+  config: {
+    duration: 200,
+    easing: easings.easeOutCubic
+  }
+}
+
+export const useTrailVerticalAnimation: UseTrailProps = {
+  from: {
+    opacity: 0,
+    y: 100,
+    scale: 0.95
+  },
+  to: {
+    opacity: 1,
+    y: 0,
+    scale: 1
+  },
+  config: {
+    duration: 200,
+    easing: easings.easeOutCubic
   }
 }

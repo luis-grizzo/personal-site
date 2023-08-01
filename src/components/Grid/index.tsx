@@ -1,23 +1,17 @@
-import {
-  useRef,
-  useState,
-  useEffect,
-  useLayoutEffect,
-  cloneElement
-} from 'react'
+import { useRef, useState, useLayoutEffect, cloneElement } from 'react'
 import { useTrail, animated } from 'react-spring'
 
+import { useResize } from 'shared/hooks/resize'
 import {
   useTrailVerticalAnimation,
   useTrailHorizontalAnimation
 } from 'shared/animations'
 
-import { theme } from 'styles/theme'
-
 import * as S from './styles'
 
 type GridProps = {
   items: ItemProps[]
+  mountComponent: boolean
 }
 
 export type ItemProps = {
@@ -26,19 +20,24 @@ export type ItemProps = {
   icon: React.ReactElement
 }
 
-export const Grid = ({ items }: GridProps): React.ReactElement => {
+export const Grid = ({
+  items,
+  mountComponent
+}: GridProps): React.ReactElement => {
+  const { isDesktop } = useResize()
   const gridRef = useRef<HTMLDivElement>(null)
 
   const [isFullLeftScroll, setIsFullLeftScroll] = useState(false)
   const [isFullRightScroll, setIsFullRightScroll] = useState(false)
-  const [isDesktop, setIsDesktop] = useState(
-    !!(window.innerWidth > theme.mediaquerys.laptopStart)
-  )
 
-  const trail = useTrail(
-    items.length,
-    isDesktop ? useTrailVerticalAnimation : useTrailHorizontalAnimation
-  )
+  const trailBaseAnimation = isDesktop
+    ? useTrailVerticalAnimation
+    : useTrailHorizontalAnimation
+
+  const trail = useTrail(items.length, {
+    ...trailBaseAnimation,
+    reverse: !mountComponent
+  })
 
   const handleScroll = (): void => {
     const offsetWidth = gridRef.current?.offsetWidth ?? 0
@@ -52,9 +51,6 @@ export const Grid = ({ items }: GridProps): React.ReactElement => {
       : setIsFullRightScroll(false)
   }
 
-  const handleResize = (): void =>
-    setIsDesktop(!!(window.innerWidth > theme.mediaquerys.laptopStart))
-
   useLayoutEffect(() => {
     handleScroll()
 
@@ -62,12 +58,6 @@ export const Grid = ({ items }: GridProps): React.ReactElement => {
 
     return () => gridRef.current?.removeEventListener('scroll', handleScroll)
   })
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-
-    return () => window.removeEventListener('resize', handleResize)
-  }, [window.innerWidth])
 
   return (
     <S.Wrapper>

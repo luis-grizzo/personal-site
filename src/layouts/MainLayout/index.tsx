@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Helmet from 'react-helmet'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
 import { MdMenu } from 'react-icons/md'
 
 import { Button, Logo, Menu } from 'components'
-import { menuItems } from 'components/Menu/menuItems'
 
 import { theme } from 'styles/theme'
 
@@ -17,28 +16,11 @@ export interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
-  const [isDesktop, setIsDesktop] = useState(
-    window.innerWidth >= theme.mediaquerys.laptopStart
-  )
 
   const navbarAnimation = useSpring({
-    from: { transform: 'translateY(-300px)' },
-    to: { transform: 'translateY(0px)' }
+    from: { y: -300 },
+    to: { y: 0 }
   })
-
-  const handleMenu = (): void => {
-    window.innerWidth >= theme.mediaquerys.laptopStart
-      ? setIsDesktop(true)
-      : setIsDesktop(false)
-  }
-
-  useEffect(() => {
-    handleMenu()
-
-    window.addEventListener('resize', handleMenu)
-
-    return () => window.removeEventListener('resize', handleMenu)
-  }, [])
 
   return (
     <S.Wrapper>
@@ -52,27 +34,12 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
         </Link>
 
         <div className="wn__link-wrapper">
-          {isDesktop ? (
-            menuItems.map((item) => (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                title={`ir para ${item.description}`}
-                className={({ isActive }) =>
-                  `wnlw__link ${isActive ? 'wnlw__link--active' : ''}`
-                }
-              >
-                {item.description}
-              </NavLink>
-            ))
-          ) : (
-            <Button
-              variant="ghost"
-              onClick={() => setMenuIsOpen((prevState) => !prevState)}
-            >
-              <MdMenu size={30} className="wnclmb__icon" />
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            onClick={() => setMenuIsOpen((prevState) => !prevState)}
+          >
+            <MdMenu size={30} className="wnclmb__icon" />
+          </Button>
         </div>
       </animated.nav>
 

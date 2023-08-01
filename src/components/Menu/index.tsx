@@ -1,6 +1,8 @@
-import { NavLink } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useTransition, animated } from 'react-spring'
 import { MdClose } from 'react-icons/md'
+
+import { useWatcher, NextPath } from 'shared/hooks/watcher'
 
 import { Button } from 'components'
 
@@ -14,6 +16,9 @@ export type MenuProps = {
 } & React.BaseHTMLAttributes<HTMLDivElement>
 
 export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
+  const { pathname } = useLocation()
+  const { setNextPath } = useWatcher()
+
   const AnimatedWrapper = animated(S.Wrapper)
 
   const wrapperTransition = useTransition(isOpen, {
@@ -37,6 +42,12 @@ export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
     reverse: isOpen
   })
 
+  const handleLinkClick = (path: NextPath) => {
+    onClose?.()
+
+    setNextPath(path)
+  }
+
   return wrapperTransition(
     (style, item) =>
       item && (
@@ -50,16 +61,15 @@ export const Menu = ({ isOpen, onClose }: MenuProps): React.ReactElement => {
                   </Button>
 
                   {menuItems.map((item) => (
-                    <NavLink
+                    <button
                       key={item.id}
-                      to={item.path}
-                      onClick={() => onClose?.()}
-                      className={({ isActive }) =>
-                        `wc__item ${isActive ? 'wc__item--active' : ''}`
-                      }
+                      onClick={() => handleLinkClick(item.path as NextPath)}
+                      className={`wc__item ${
+                        pathname === item.path ? 'wc__item--active' : ''
+                      }`}
                     >
                       {item.description}
-                    </NavLink>
+                    </button>
                   ))}
                 </animated.div>
               )
