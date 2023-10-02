@@ -1,7 +1,7 @@
 export const menuItems = [
   {
     id: 0,
-    description: 'Home',
+    description: 'Sobre mim',
     path: '/'
   },
   {

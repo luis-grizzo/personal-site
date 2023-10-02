@@ -15,7 +15,7 @@ const modifiers = {
     }
   `,
   secondary: (theme: DefaultTheme) => css`
-    background-color: ${theme.colors.white};
+    background-color: transparent;
     color: ${theme.colors.black};
     border-color: ${theme.colors.black};
 
@@ -31,7 +31,7 @@ const modifiers = {
 
     &:hover,
     &focus {
-      background-color: ${theme.colors.shape};
+      color: ${theme.colors.blackHover};
     }
   `
 }

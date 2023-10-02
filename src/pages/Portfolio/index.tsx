@@ -1,22 +1,48 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useSpring, animated } from 'react-spring'
-
-import { Carousel, Button, Loading } from 'components'
 
 import { fetchRepos, FetchReposProps } from 'services'
 
+import { Button, Carousel, Loading } from 'components'
+
 import { useSpringHorizontalAnimation } from 'shared/animations'
 import { socialMedia } from 'shared/constants'
-import { handlePageChange } from 'shared/utils'
+import { useWatcher } from 'shared/hooks/watcher'
 
 import * as S from './styles'
 
 const Portfolio = (): React.ReactElement => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const { nextPath, setNextPath } = useWatcher()
 
+  const [mountPage, setMountPage] = useState(true)
   const [data, setData] = useState<FetchReposProps[]>([])
   const [loading, setLoading] = useState(data.length === 0)
+
+  const { github } = socialMedia
+
+  const handleUnmountedPage = (finished: boolean | undefined) =>
+    finished && nextPath && navigate(nextPath)
+
+  const titleAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    reverse: !mountPage
+  })
+
+  const textAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    delay: 100,
+    reverse: !mountPage
+  })
+
+  const buttonsAnimation = useSpring({
+    ...useSpringHorizontalAnimation,
+    delay: 200,
+    reverse: !mountPage,
+    onRest: ({ finished }) => handleUnmountedPage(finished)
+  })
 
   useEffect(() => {
     fetchRepos().then((data) => setData(data))
@@ -26,27 +52,21 @@ const Portfolio = (): React.ReactElement => {
     data.length > 0 && setLoading(false)
   }, [data])
 
-  const titleAnimation = useSpring(useSpringHorizontalAnimation)
-
-  const textAnimation = useSpring({
-    ...useSpringHorizontalAnimation,
-    delay: 100
-  })
-
-  const buttonsAnimation = useSpring({
-    ...useSpringHorizontalAnimation,
-    delay: 200
-  })
-
-  const { github } = socialMedia
+  useEffect(() => {
+    nextPath && nextPath !== pathname && setMountPage(false)
+  }, [nextPath])
 
   return (
     <S.Page>
-      {loading ? <Loading isChildren /> : <Carousel items={data} />}
+      {loading ? (
+        <Loading isChildren />
+      ) : (
+        <Carousel items={data} mountComponent={mountPage} />
+      )}
 
       <div className="content">
         <animated.h1 style={titleAnimation} className="c__title">
-          <strong className="ct__highlight">Portfólio</strong>
+          Meu <strong className="ct__highlight">portfólio</strong>
         </animated.h1>
 
         <animated.p style={textAnimation} className="c__description">
@@ -54,7 +74,7 @@ const Portfolio = (): React.ReactElement => {
           <a
             className="cd__link"
             href={github.url}
-            title={github.name}
+            title={`Acessar meu ${github.name}`}
             target="_blank"
             rel="noreferrer"
           >
@@ -64,16 +84,10 @@ const Portfolio = (): React.ReactElement => {
         </animated.p>
 
         <animated.div style={buttonsAnimation} className="c__buttons-wrapper">
-          <Button
-            variant="primary"
-            onClick={() => handlePageChange(navigate('/about'))}
-          >
+          <Button variant="primary" onClick={() => setNextPath('/')}>
             Sobre mim
           </Button>
-          <Button
-            variant="secondary"
-            onClick={() => handlePageChange(navigate('/contact'))}
-          >
+          <Button variant="secondary" onClick={() => setNextPath('/contact')}>
             Entre em contato
           </Button>
         </animated.div>

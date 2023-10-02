@@ -31,7 +31,8 @@ export const Frame = ({ mountComponent }: FrameProps): React.ReactElement => {
   const [activeImage, setActiveImage] = useState(0)
 
   const [animations, animationsApi] = useSprings(images.length, () => ({
-    transform: 'translateY(100%)'
+    transform: 'translateY(100%)',
+    scale: 0.5
   }))
 
   const springBaseAnimation = isDesktop
@@ -43,6 +44,13 @@ export const Frame = ({ mountComponent }: FrameProps): React.ReactElement => {
     ...springBaseAnimation,
     reverse: !mountComponent
   })
+
+  const handleAnimation = () =>
+    animationsApi.start((index) => {
+      if (index === activeImage && mountComponent)
+        return { transform: 'translateY(0%)', scale: 1 }
+      return { transform: 'translateY(100%)', scale: 0.5 }
+    })
 
   useLayoutEffect(() => {
     handleAnimation()
@@ -60,12 +68,6 @@ export const Frame = ({ mountComponent }: FrameProps): React.ReactElement => {
 
     return () => clearTimeout(updateImage)
   }, [activeImage])
-
-  const handleAnimation = () =>
-    animationsApi.start((index) => {
-      if (index === activeImage) return { transform: 'translateY(0%)' }
-      return { transform: 'translateY(100%)' }
-    })
 
   return (
     <AnimatedCard style={cardAnimation}>

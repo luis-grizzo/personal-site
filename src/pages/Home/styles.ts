@@ -16,7 +16,7 @@ export const Page = styled.main`
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
       grid-template-columns: 1fr;
 
-      [class*='title'] {
+      .w__title {
         font-size: 5.8rem !important;
       }
     }

@@ -16,7 +16,7 @@ export const Page = styled.main`
     @media screen and (max-width: ${`${theme.mediaquerys.laptopStart}px`}) {
       grid-template-columns: 1fr;
 
-      [class*='title'] {
+      .c__title {
         font-size: 5.8rem !important;
       }
     }
@@ -45,8 +45,14 @@ export const Page = styled.main`
         line-height: normal;
 
         .cd__link {
-          font-weight: 700;
           color: ${theme.colors.primary};
+
+          will-change: color;
+          transition: ${`color ${theme.transitions.default}`};
+
+          &:hover {
+            color: ${theme.colors.primaryHover};
+          }
         }
       }
 
@@ -83,7 +89,7 @@ export const Page = styled.main`
         padding: 5rem;
         border-radius: 2rem;
         background-color: ${theme.colors.shape};
-        transition: ${`background-color ${theme.transitions.new}`};
+        transition: ${`background-color ${theme.transitions.default}`};
 
         &:hover {
           background-color: ${theme.colors.primary};
@@ -101,7 +107,7 @@ export const Page = styled.main`
 
         .gc__description {
           color: ${theme.colors.text};
-          transition: ${`color ${theme.transitions.new}`};
+          transition: ${`color ${theme.transitions.default}`};
         }
       }
     } */

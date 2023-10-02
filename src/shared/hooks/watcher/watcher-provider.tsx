@@ -15,8 +15,10 @@ export const WatcherProvider = ({
   const [nextPath, setNextPath] = useState<NextPath>(null)
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    nextPath && window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [nextPath])
 
+  useEffect(() => {
     nextPath && setNextPath(null)
   }, [pathname])
 

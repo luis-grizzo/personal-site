@@ -76,7 +76,7 @@ const Home = (): React.ReactElement => {
           </Button>
 
           <Button variant="secondary" onClick={() => setNextPath('/contact')}>
-            Contato
+            Entre em contato
           </Button>
         </animated.div>
       </div>
